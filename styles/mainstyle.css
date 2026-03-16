@@ -51,8 +51,9 @@ body {
 }
 
 .navbar .searchlinks {
+    margin-right: 50px;
     display: flex;
-    gap: 20px;
+    gap: 10px;
     justify-content: center;
     align-items: center;
     list-style: none;
@@ -60,21 +61,68 @@ body {
 }
 
 .navbar .searchlinks .img-div {
-    background-color: white;
     width: 50px;
     height: 50px;
-    border-radius: 100%;
+    border-radius: 75%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.navbar .searchlinks .img-div img {
-    width: 50px;
-    height: 50px;
+.navbar .searchlinks .img-div i {
     background-color: white;
+    color:#190442;
     padding: 10px;
     border-radius: 100%;
+    font-size: 1.5em;   
+    
+}
+
+
+.navbar .searchlinks .img-div:hover i {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #f2f1f1;
+    cursor: pointer;
+    font-size: 1.55em;
+
+}
+
+.navbar .searchlinks .dropdown {
+    position: relative;
+}
+
+.navbar .searchlinks .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: -50px;
+    background-color: #190442;
+    list-style: none;
+    padding: 10px 0;
+    margin: 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    min-width: 150px;
+}
+
+.navbar .searchlinks .dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.navbar .searchlinks .dropdown-menu li {
+    margin: 0;
+}
+
+.navbar .searchlinks .dropdown-menu a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 8px 20px;
+    transition: background-color 0.2s ease;
+}
+
+.navbar .searchlinks .dropdown-menu a:hover {
+    background-color: rgba(255, 255, 255, 0.15);
 }
 
 .main {
@@ -92,12 +140,37 @@ body {
     padding: 20px;
     list-style: none;
 }
+.main .sidebar li {
+    width: 120%;
+}
 .main .sidebar a {
-    display: block;
+    display: flex;
+    align-items: center;
     color: white;
     text-decoration: none;
     margin-bottom: 20px;
     list-style: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+
+
+.main .sidebar a i {
+    margin-right: 10px;
+    color: white;
+    background-color: transparent;
+}
+
+.main .sidebar a:hover {
+    
+    cursor:pointer;
+    background-color: rgba(255, 255, 255, 0.15);
+    font-size: 1.05em;
+    color: #f2f1f1;
+    
+
 }
 
 .main .content {
@@ -133,8 +206,15 @@ body {
     display: flex;
     flex-direction: column;
     color: white;
+    border: 1px solid #f2f1f1;
+    transition: box-shadow 0.2s;
+    
 }
 
+.main .content .products .product:hover {
+    cursor:pointer;
+    box-shadow: 0 4px 8px rgba(207, 186, 186, 0.5);
+}
 
 .main .content .products .product img {
     width: 100%;
@@ -145,17 +225,20 @@ body {
 }
 
 .main .content .products .product h3 {
-    margin-top: 10px;
-    margin-bottom:10px;
+    margin: 10px;
     text-align: left;
     font-weight: 500;
 }
 .main .content .products .product p {
-    margin-top: 10px;
-    margin-bottom:5px;
+    margin: 10px;
     text-align: left;
 }
 
+.main .content .products .product .price {
+    font-weight: 500;
+    color: #f2f1f1;
+    margin: 10px;
+}
 .footer {
     background-color: #190442;
     width: 100%;
@@ -177,4 +260,54 @@ body {
 .footer a {
     color: white;
     text-decoration: none;
+}
+
+
+.registration-container {
+    position:fixed;
+    top: 50%;
+    right: 10%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: center;
+    background-color: #190442;
+    
+}
+.registration-container h1 {
+    color: white;
+    margin-bottom: px;
+    font-weight: 500;
+    font-size: 2em;
+    color: #f2f1f1;
+}
+
+.registration-container form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+
+.registration-container form label {
+    color: #f2f1f1;
+    margin-bottom: 2px;
+}
+.registration-container form input {
+    padding: 10px;
+    border:none;
+    border-bottom: 1px solid #f2f1f1;
+    color: #f2f1f1;
+}
+
+.registration-container form button {
+    margin-top: 20px;
+    padding: 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f2f1f1;
+    color: #190442;
+    font-weight: 500;
+    cursor: pointer;
+    width: 75%;
 }
