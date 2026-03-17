@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="./styles/mainstyle.css">
+    <link rel="stylesheet" href="./styles/cart.css">
+    <title>Košík</title>
+</head>
+<body>
+<div class="navbar">
+    <img src="./assets/logo.png" alt="logo" class="logo"/>
+    <input type="text" placeholder="Search" class="searchbar"/>
+    <ul class="searchlinks">
+        <li><a href="#">
+            <div class="img-div"><i class="fa-solid fa-magnifying-glass"></i></div></a></li>
+        <li><a href="#">
+            <div class="img-div"><i class="fa-solid fa-cart-arrow-down"></i></div></a></li>
+        <li class="dropdown">
+            <a href="#">
+                <div class="img-div"><i class="fa-solid fa-user"></i></div>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="#">Prihlásiť sa</a></li>
+                <li><a href="./registration.html">Registrovať sa</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div class="main">
+    <div class="sidebar">
+        <ul class="categories">
+            <li><a href="#"><i class="fa-solid fa-star"></i> Novinky</a></li>
+            <li><a href="#"><i class="fa-solid fa-laptop"></i> Notebooky</a></li>
+            <li><a href="#"><i class="fa-solid fa-desktop"></i> Počítače</a></li>
+            <li><a href="#"><i class="fa-solid fa-mobile"></i> Smartfóny</a></li>
+            <li><a href="#"><i class="fa-solid fa-computer-mouse"></i> Príslušenstvá</a></li>
+            <li><a href="#"><i class="fa-solid fa-blender"></i> Spotrebiče</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        <h1 class="cart-title">Košík</h1>
+        <div class="cart-items">
+            <div class="cart-item">
+                <img src="./assets/product1.png" alt="produkt" class="cart-item-img" />
+                <div class="cart-item-info">
+                    <p class="cart-item-name">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                    <p class="cart-item-price">5€</p>
+                    <p class="cart-item-stock">Na sklade</p>
+                    <div class="cart-item-quantity">
+                        <button class="qty-btn">&#8722;</button>
+                        <span class="qty-value">1</span>
+                        <button class="qty-btn">&#43;</button>
+                    </div>
+                </div>
+            </div>
+            <div class="cart-item">
+                <img src="./assets/product2.png" alt="produkt" class="cart-item-img" />
+                <div class="cart-item-info">
+                    <p class="cart-item-name">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                    <p class="cart-item-price">5€</p>
+                    <p class="cart-item-stock">Na sklade</p>
+                    <div class="cart-item-quantity">
+                        <button class="qty-btn">&#8722;</button>
+                        <span class="qty-value">1</span>
+                        <button class="qty-btn">&#43;</button>
+                    </div>
+                </div>
+            </div>
+            <div class="cart-item">
+                <img src="./assets/product3.png" alt="produkt" class="cart-item-img" />
+                <div class="cart-item-info">
+                    <p class="cart-item-name">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                    <p class="cart-item-price">5€</p>
+                    <p class="cart-item-stock">Na sklade</p>
+                    <div class="cart-item-quantity">
+                        <button class="qty-btn">&#8722;</button>
+                        <span class="qty-value">1</span>
+                        <button class="qty-btn">&#43;</button>
+                    </div>
+                </div>
+            </div>
+            <div class="cart-item">
+                <img src="./assets/product4.png" alt="produkt" class="cart-item-img" />
+                <div class="cart-item-info">
+                    <p class="cart-item-name">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                    <p class="cart-item-price">5€</p>
+                    <p class="cart-item-stock">Na sklade</p>
+                    <div class="cart-item-quantity">
+                        <button class="qty-btn">&#8722;</button>
+                        <span class="qty-value">1</span>
+                        <button class="qty-btn">&#43;</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <p class="cart-total">Total: 100€</p>
+            <button class="checkout-btn" onclick="location.href=''">Prejsť k platbe</button>
+        </div>
+    </div>
+</div>
+<div class="footer">
+
+    <ul class="About">
+        <h4>O nás</h4>
+        <li><a href="#">Kontakt</a></li>
+        <li><a href="#">Compliance</a></li>
+        <li><a href="#">Kariéra</a></li>
+    </ul>
+
+
+    <ul class="Claims">
+        <h4>Objedávky</h4>
+        <li><a href="#">Stav objednávky</a></li>
+        <li><a href="#">Stav reklamácie</a></li>
+        <li><a href="#">Ako začať</a></li>
+    </ul>
+
+
+    <ul class="Shopping">
+        <h4>Nakupovanie</h4>
+        <li><a href="#">Obchodné pravidlá</a></li>
+        <li><a href="#">Podmienky reklamácie</a></li>
+        <li><a href="#">Možnosti doručenia</a></li>
+        <li><a href="#">Možnosti platby</a></li>
+    </ul>
+</div>
+</body>
+</html>
