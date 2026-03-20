@@ -180,14 +180,14 @@ body {
 }
 
 .main .content {
-    margin-top: 50px;
+    margin-top: 20px;
     margin-left: 50px;
     width: 75%;
     height: 100%;
 }
 .main .content .banner {
     width: 100%;
-    height: 300px;
+    height: 500px;
     background-color: #f2f1f1;
     border-radius: 20px;
 }
@@ -199,6 +199,9 @@ body {
     flex-wrap: wrap;
 }
 
+.main .content .product-list {
+    margin-top: 20px;
+}
 .main .content .products .row {
     width: 100%;
     margin-bottom: 50px;
@@ -355,4 +358,84 @@ body {
     cursor: pointer;
     text-decoration: underline;
     
+}
+
+
+
+/* Product list styling */
+
+.BtnFilter {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: #f2f1f1;
+}
+.BtnFilter .btn {
+    color: #f2f1f1;
+    width: 10rem;
+    padding: 7px 5px;
+    border: 1px solid #f2f1f1;
+    border-radius: 5px;
+    font-weight: 500;
+}
+
+.BtnFilter .btn:hover {
+    color: #28056d;
+    background-color: #f2f1f1;
+}
+
+.paging  {
+    position: absolute;
+    left: 40%;
+    display: flex;
+    color: #f2f1f1;
+    align-items: center;
+    padding: 10px 40px;
+    border-radius: 5px;
+}
+.paging ul {
+    margin: 20px 30px;
+
+}
+.paging ul li {
+    display: inline-block;
+    margin: 0 10px;
+
+    width: 45px;
+    height: 45px;
+    border: 1px solid #f2f1f1;
+    border-radius: 50px;
+    text-align: center;
+    line-height: 45px;
+    font-weight: 500;
+}
+.paging ul li:hover {
+    background-color: #f2f1f1;
+    color: #28056d;
+}
+
+.paging .btn-paging {
+    color: #f2f1f1;
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    outline: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+.paging .btn-paging:hover {
+    background-color: #f2f1f1;
+    color: #28056d;
+}
+.paging .btn-paging:focus {
+    outline: none;
+    box-shadow: none;
+}
+.paging .btn-paging i {
+    background-color: transparent;
+}
+.paging .btn-paging i:hover {
+    color: #28056d;
 }
