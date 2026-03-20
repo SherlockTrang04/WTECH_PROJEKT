@@ -78,6 +78,78 @@
     flex: 1;
 }
 
+.product-price {
+    font-size: 1.6em;
+    font-weight: 600;
+    color: #f2f1f1;
+    margin-top: 20px;
+}
+
+.product-quantity {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.qty-btn {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #f2f1f1;
+    border-radius: 50%;
+    background-color: transparent;
+    color: #f2f1f1;
+    font-size: 1.1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, color 0.2s;
+    font-family: "Nunito", sans-serif;
+}
+
+
+.qty-btn:hover {
+    background-color: #f2f1f1;
+    color: #190442;
+}
+
+.qty-input {
+    width: 50px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #f2f1f1;
+    color: #f2f1f1;
+    font-size: 1em;
+    font-family: "Nunito", sans-serif;
+    text-align: center;
+    padding: 2px 0;
+}
+
+.qty-input:focus {
+    outline: none;
+    border-bottom: 1px solid #c1b8b8;
+}
+
+.qty-input::-webkit-inner-spin-button,
+.qty-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.qty-input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.qty-err {
+    width: 100%;
+    color: #ff6b6b;
+    font-size: 0.85em;
+    min-height: 1.1em;
+}
+
+
 .add-to-cart-btn {
     margin-top: 30px;
     padding: 15px;
