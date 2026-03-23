@@ -1,0 +1,138 @@
+.payment-wrapper {
+    flex: 1;
+    padding: 50px 80px;
+    background-color: #190442;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.payment-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.payment-section h2 {
+    color: #f2f1f1;
+    font-weight: 500;
+    font-size: 1.1em;
+    margin-bottom: 6px;
+}
+
+.option-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.option-row input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #f2f1f1;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.option-row label {
+    color: #f2f1f1;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.address-form {
+    display: none;
+    margin-left: 32px;
+    margin-top: 8px;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.address-row {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+}
+
+.address-row label {
+    color: #f2f1f1;
+    font-size: 0.95em;
+    min-width: 60px;
+    text-align: right;
+}
+
+.address-input {
+    width: 300px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #f2f1f1;
+    color: #f2f1f1;
+    font-size: 0.95em;
+    font-family: "Nunito", sans-serif;
+    padding: 4px 0;
+}
+
+.address-input:focus {
+    outline: none;
+    border-bottom: 1px solid #c1b8b8;
+}
+
+.card-form {
+    display: none;
+    margin-left: 32px;
+    margin-top: 4px;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 320px;
+}
+
+.card-input {
+    padding: 10px 14px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f2f1f1;
+    color: #190442;
+    font-size: 0.95em;
+    font-family: "Nunito", sans-serif;
+}
+
+.card-input.full {
+    width: 100%;
+}
+
+.card-input:focus {
+    outline: none;
+    box-shadow: 0 0 8px #c1b8b8;
+}
+
+.card-row {
+    display: flex;
+    gap: 10px;
+}
+
+.card-row .card-input {
+    flex: 1;
+}
+
+.payment-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.pay-btn {
+    padding: 12px 50px;
+    border: 1px solid #f2f1f1;
+    border-radius: 5px;
+    background-color: transparent;
+    color: #f2f1f1;
+    font-size: 1em;
+    font-family: "Nunito", sans-serif;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.pay-btn:hover {
+    background-color: #f2f1f1;
+    color: #190442;
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="./styles/mainstyle.css">
+  <link rel="stylesheet" href="./styles/order_rezervation_status.css">
+  <title>Stav rezervácie</title>
+</head>
+<body>
+<div class="navbar">
+  <img src="./assets/logo.png" alt="logo" class="logo"/>
+  <input type="text" placeholder="Search" class="searchbar"/>
+  <ul class="searchlinks">
+    <li><a href="#">
+      <div class="img-div"><i class="fa-solid fa-magnifying-glass"></i></div>
+    </a></li>
+    <li><a href="#">
+      <div class="img-div"><i class="fa-solid fa-cart-arrow-down"></i></div>
+    </a></li>
+    <li class="dropdown">
+      <a href="#">
+        <div class="img-div"><i class="fa-solid fa-user"></i></div>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="#">Prihlásiť sa</a></li>
+        <li><a href="./registration.html">Registrovať sa</a></li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div class="order-status-wrapper">
+  <div class="order-status-box">
+    <h2>Zadajte číslo rezervácie a zistite jej stav</h2>
+
+    <input
+            type="text"
+            id="order-input"
+            class="order-status-input"
+            placeholder=""
+            oninput="clearError()"
+    >
+    <span class="order-error" id="order-error"></span>
+
+    <p class="order-hint">Číslo rezervácie sme vám poslali do e-mailu a SMS.</p>
+
+    <button class="order-btn" onclick="checkOrder()">Zistiť stav</button>
+  </div>
+</div>
+<div class="footer">
+
+  <ul class="About">
+    <h4>O nás</h4>
+    <li><a href="#">Kontakt</a></li>
+    <li><a href="#">Compliance</a></li>
+    <li><a href="#">Kariéra</a></li>
+  </ul>
+
+
+  <ul class="Claims">
+    <h4>Objedávky</h4>
+    <li><a href="#">Stav objednávky</a></li>
+    <li><a href="#">Stav reklamácie</a></li>
+    <li><a href="#">Ako začať</a></li>
+  </ul>
+
+
+  <ul class="Shopping">
+    <h4>Nakupovanie</h4>
+    <li><a href="#">Obchodné pravidlá</a></li>
+    <li><a href="#">Podmienky reklamácie</a></li>
+    <li><a href="#">Možnosti doručenia</a></li>
+    <li><a href="#">Možnosti platby</a></li>
+  </ul>
+</div>
+<script>
+  //TODO scripty pre kontrolu existencie objednavky, data budu ulozene v databaze, zatial ju nemame.
+</script>
+</body>
+</html>

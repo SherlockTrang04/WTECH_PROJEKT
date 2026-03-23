@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="./styles/mainstyle.css">
+    <link rel="stylesheet" href="./styles/payment.css">
+    <title>Platba</title>
+
+</head>
+<body>
+<div class="navbar">
+    <img src="./assets/logo.png" alt="logo" class="logo"/>
+    <input type="text" placeholder="Search" class="searchbar"/>
+    <ul class="searchlinks">
+        <li><a href="#">
+            <div class="img-div"><i class="fa-solid fa-magnifying-glass"></i></div>
+        </a></li>
+        <li><a href="#">
+            <div class="img-div"><i class="fa-solid fa-cart-arrow-down"></i></div>
+        </a></li>
+        <li class="dropdown">
+            <a href="#">
+                <div class="img-div"><i class="fa-solid fa-user"></i></div>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="#">Prihlásiť sa</a></li>
+                <li><a href="./registration.html">Registrovať sa</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div class="payment-wrapper">
+
+    <div class="payment-section">
+        <h2>Zvoľte spôsob doručenia:</h2>
+
+        <div class="option-row">
+            <input type="checkbox" id="pickup" name="delivery" onchange="handleDelivery(this)"/>
+            <label for="pickup">Osobný odber</label>
+        </div>
+
+        <div class="option-row">
+            <input type="checkbox" id="delivery-address" name="delivery" onchange="handleDelivery(this)"/>
+            <label for="delivery-address">Doručenie na adresu</label>
+        </div>
+
+        <div class="address-form" id="address-form">
+            <div class="address-row">
+                <label for="street">Ulica:</label>
+                <input type="text" id="street" name="street" class="address-input"/>
+            </div>
+            <div class="address-row">
+                <label for="house-number">Číslo:</label>
+                <input type="text" id="house-number" name="house-number" class="address-input"/>
+            </div>
+            <div class="address-row">
+                <label for="zip">PSČ:</label>
+                <input type="text" id="zip" name="zip" class="address-input"/>
+            </div>
+            <div class="address-row">
+                <label for="city">Mesto:</label>
+                <input type="text" id="city" name="city" class="address-input"/>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="payment-section">
+        <h2>Zvoľte spôsob platby:</h2>
+
+        <div class="option-row">
+            <input type="checkbox" id="card-online" name="payment" onchange="handlePayment(this)"/>
+            <label for="card-online">Kartou online</label>
+        </div>
+
+        <div class="card-form" id="card-form">
+            <input type="text" class="card-input full" placeholder="Číslo karty" maxlength="19"
+                   oninput="formatCardNumber(this)"/>
+            <div class="card-row">
+                <input type="text" class="card-input" placeholder="Rok platnosti" maxlength="5"
+                       oninput="formatExpiry(this)"/>
+                <input type="text" class="card-input" placeholder="CVV" maxlength="3"/>
+            </div>
+        </div>
+
+        <div class="option-row">
+            <input type="checkbox" id="card-on-pickup" name="payment" onchange="handlePayment(this)"/>
+            <label for="card-on-pickup">Kartou pri vyzdvihnutí</label>
+        </div>
+    </div>
+
+    <div class="payment-footer">
+        <button class="pay-btn" onclick="submitPayment()">Zaplatiť</button>
+    </div>
+</div>
+<div class="footer">
+
+    <ul class="About">
+        <h4>O nás</h4>
+        <li><a href="#">Kontakt</a></li>
+        <li><a href="#">Compliance</a></li>
+        <li><a href="#">Kariéra</a></li>
+    </ul>
+
+
+    <ul class="Claims">
+        <h4>Objedávky</h4>
+        <li><a href="#">Stav objednávky</a></li>
+        <li><a href="#">Stav reklamácie</a></li>
+        <li><a href="#">Ako začať</a></li>
+    </ul>
+
+
+    <ul class="Shopping">
+        <h4>Nakupovanie</h4>
+        <li><a href="#">Obchodné pravidlá</a></li>
+        <li><a href="#">Podmienky reklamácie</a></li>
+        <li><a href="#">Možnosti doručenia</a></li>
+        <li><a href="#">Možnosti platby</a></li>
+    </ul>
+</div>
+
+<script>
+    //iba jedna moznost pri donaske
+    function handleDelivery(clicked) {
+        const checkBoxes = document.querySelectorAll('input[name="delivery"]');
+        checkBoxes.forEach(checkBox => {
+            if (checkBox !== clicked) checkBox.checked = false;
+        });
+
+        const adressForm = document.getElementById('address-form');
+
+        if (clicked.id === 'delivery-address' && clicked.checked) {
+            adressForm.style.display = 'flex';
+            loadUserAddress();
+        } else {
+            adressForm.style.display = 'none';
+            clearAddressForm();
+        }
+    }
+
+    function loadUserAddress() {
+        //TODO nacitanie udajov so DB
+    }
+
+    function fillAddressForm() {
+        //TODO autodoplnenie addresy
+    }
+
+    function clearAddressForm() {
+        document.getElementById('street').value = '';
+        document.getElementById('house-number').value = '';
+        document.getElementById('zip').value = '';
+        document.getElementById('city').value = '';
+    }
+
+    function handlePayment(clicked) {
+        const checkBoxes = document.querySelectorAll('input[name="payment"]');
+        checkBoxes.forEach(checkBox => {
+            if (checkBox !== clicked) checkBox.checked = false;
+        });
+
+        const cardForm = document.getElementById('card-form');
+        cardForm.style.display = (clicked.id === 'card-online' && clicked.checked) ? 'flex' : 'none';
+    }
+
+    function formatCardNumber(input) {
+        let value = input.value.replace(/\D/g, '');
+        value =  value.match(/.{1,4}/g?.join(' ') || value);
+        input.value = value;
+    }
+
+    function formatExpiry(input) {
+        let value = input.value.replace(/\D/g, '');
+        if (value.length > 3) {
+            value = value.slice(0,2) + '/' + value.slice(2, 4);
+        }
+        input.value = value;
+    }
+
+    function submitPayment() {}
+</script>
+</body>
+</html>
