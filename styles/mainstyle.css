@@ -442,3 +442,14 @@ body {
 .paging .btn-paging i:hover {
     color: #28056d;
 }
+
+@media (max-width: 920px) {
+    .img-registration {
+        display: none;
+    }
+
+    .registration-container {
+        margin: 0 auto;
+        width: min(90vw, 480px);
+    }
+}

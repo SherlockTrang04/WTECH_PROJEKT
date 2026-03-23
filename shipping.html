@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/shipping.css">
+    <title>Doprava</title>
+</head>
+<body>
+    <div class="container">
+        <div class="shipping-logo-wrap">
+            <img src="./assets/logo.png" alt="logo" class="logo" />
+        </div>
+        <h1>Doručenie</h1>
+        <form action="POST" class="shipping-form">
+            <label for="ulica">Ulica:</label>
+            <input type="text" id="ulica" name="ulica" required>
+
+            <label for="cislo">Číslo:</label>
+            <input type="text" id="cislo" name="cislo" required>
+
+            <label for="psc">PSČ:</label>
+            <input type="text" id="psc" name="psc" required>
+
+            <label for="mesto">Mesto:</label>
+            <input type="text" id="mesto" name="mesto" required>
+
+            <button type="submit">Potvrdiť</button>
+        </form>
+    </div>
+</body>
+</html>
