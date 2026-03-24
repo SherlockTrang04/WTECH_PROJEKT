@@ -3,34 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap 5 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="./styles/mainstyle.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200..1000&display=swap" rel="stylesheet">
 
-    <title>Elektroshop</title>
+    <link href="./styles/style.css" rel="stylesheet">
+
+    <title>Elektroshop – Produkty</title>
+    
 </head>
 <body>
 
-        
+    <!-- ── NAVBAR ───────────────────────────────────────── -->
+    <nav class="navbar main-navbar navbar-expand-lg">
+        <div class="container-fluid">
 
+            <a class="navbar-brand p-0" href="index.html">
+                <img src="./assets/logo.png" alt="logo" class="logo" />
+            </a>
 
-    <div class="navbar">
-        <img src="./assets/logo.png" alt="logo" class="logo" />
-        <input type="text" placeholder="Search" class="searchbar" />
-        <ul class="searchlinks">
-            <li><a href="#"><div class="img-div"><i class="fa-solid fa-magnifying-glass"></i></div></li>
-            <li><a href="#"><div class="img-div"><i class="fa-solid fa-cart-arrow-down"></i></div></li>
-            <li class="dropdown">
-                <a href="#"><div class="img-div"><i class="fa-solid fa-user"></i></div></a>
-                <ul class="dropdown-menu">
-                    <li><a href="#">Prihlásiť sa</a></li>
-                    <li><a href="./registration.html">Registrovať sa</a></li>
+            <button class="navbar-toggler ms-auto me-2" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#mainNavCollapse"
+                    aria-controls="mainNavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="mainNavCollapse">
+                <div class="mx-auto my-2 my-lg-0" style="width:100%;max-width:500px;">
+                    <input type="text" placeholder="Hľadať..." class="searchbar" />
+                </div>
+
+                <ul class="navbar-nav align-items-center gap-1 ms-lg-3">
+                    <li class="nav-item">
+                        <button class="nav-icon-btn" aria-label="Hľadať">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <a href="./cart.html" class="nav-icon-btn" style="text-decoration:none;">
+                            <i class="fa-solid fa-cart-arrow-down"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <button class="nav-icon-btn dropdown-toggle" data-bs-toggle="dropdown"
+                                aria-expanded="false" style="background:transparent;border:none;">
+                            <i class="fa-solid fa-user"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="./login.html">Prihlásiť sa</a></li>
+                            <li><a class="dropdown-item" href="./registration.html">Registrovať sa</a></li>
+                        </ul>
+                    </li>
                 </ul>
-            </li>
-        </ul>
-    </div>
+            </div>
+        </div>
+    </nav>
 
-    <div class="main">
-        <div class="sidebar">
+    <!-- ── MAIN LAYOUT ──────────────────────────────────── -->
+    <div class="d-flex flex-lg-row flex-column" style="flex:1;">
+
+        <!-- Desktop Sidebar -->
+        <aside class="sidebar d-none d-lg-block" style="width:200px; flex-shrink:0;">
             <ul class="categories">
                 <li><a href="#"><i class="fa-solid fa-star"></i> Novinky</a></li>
                 <li><a href="#"><i class="fa-solid fa-laptop"></i> Notebooky</a></li>
@@ -39,100 +75,185 @@
                 <li><a href="#"><i class="fa-solid fa-computer-mouse"></i> Príslušenstvá</a></li>
                 <li><a href="#"><i class="fa-solid fa-blender"></i> Spotrebiče</a></li>
             </ul>
-        </div>
-        <div class="content">
-            <div class="BtnFilter">
-                <p>Filter podľa:  </p>
-                <button class="btn filter"> Ceny </button>
-                <button class="btn filter"> Značky </button>
-                <button class="btn filter"> Najpredávanejšie </button>
+        </aside>
 
+        <!-- Mobile Offcanvas Sidebar -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileSidebar">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title">Kategórie</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
             </div>
-        
-        <div class="products product-list">
-            <div class="row">
-                <div class="product">
-                    <img src="./assets/iphone.jpg" alt="product1" />
-                    <h3>Produkt 1</h3>
-                    <p>Popis produktu 1</p>
-                    <span class="price">€199.99</span>
-                </div>  
-
-                <div class="product">
-                    <img src="./assets/notebook.jpg" alt="product1" />
-                    <h3>Produkt 2</h3>
-                    <p>Popis produktu 1</p>
-                    <span class="price">€199.99</span>
-                </div>
-                
-                <div class="product">
-                    <img src="./assets/cable.jpg" alt="product1" />
-                    <h3>Produkt 3</h3>
-                    <p>Popis produktu 1</p>
-                    <span class="price">€199.99</span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="product">
-                    <img src="./assets/watch.jpg" alt="product1" />
-                    <h3>Produkt 1</h3>
-                    <p>Popis produktu 1</p>
-                    <span class="price">€199.99</span>
-                </div>
-
-                <div class="product">
-                    <img src="./assets/washing.jpg" alt="product1" />
-                    <h3>Produkt 2</h3>
-                    <p>Popis produktu 1</p>
-                    <span class="price">€199.99</span>
-                </div>
-                
-                <div class="product">
-                    <img src="./assets/charger.jpg" alt="product1" />
-                    <h3>Produkt 3</h3>
-                    <p>Popis produktu 1</p>
-                    <span class="price">€199.99</span>
-                </div>
-            </div>
-            
-            <div class="row">
-                <div class="product">
-                    <img src="./assets/fridge.jpg" alt="product1" />
-                    <h3>Produkt 1</h3>
-                    <p>Popis produktu 1</p>
-                    <span class="price">€199.99</span>
-                </div>
-
-                <div class="product">
-                    <img src="./assets/tablet.jpg" alt="product1" />
-                    <h3>Produkt 2</h3>
-                    <p>Popis produktu 1</p>
-                    <span class="price">€199.99</span>
-                </div>
-                
-                <div class="product">
-                    <img src="./assets/airpods.jpg" alt="product1" />
-                    <h3>Produkt 3</h3>
-                    <p>Popis produktu 1</p>
-                    <span class="price">€199.99</span>
-                </div>
+            <div class="offcanvas-body">
+                <ul class="categories">
+                    <li><a href="#"><i class="fa-solid fa-star"></i> Novinky</a></li>
+                    <li><a href="#"><i class="fa-solid fa-laptop"></i> Notebooky</a></li>
+                    <li><a href="#"><i class="fa-solid fa-desktop"></i> Počítače</a></li>
+                    <li><a href="#"><i class="fa-solid fa-mobile"></i> Smartfóny</a></li>
+                    <li><a href="#"><i class="fa-solid fa-computer-mouse"></i> Príslušenstvá</a></li>
+                    <li><a href="#"><i class="fa-solid fa-blender"></i> Spotrebiče</a></li>
+                </ul>
             </div>
         </div>
 
-        <!-- Here ends the product list -->
-        <div class="paging">
-            <button class="btn-paging prev"><i class="fa-solid fa-arrow-left"></i></button>
-            <ul>
-                <li class="link" value="1">1</li>
-                <li class="link" value="1">2</li>
-                <li class="link" value="1">3</li>
-            </ul>
-            <button class="btn-paging next"><i class="fa-solid fa-arrow-right"></i></button>
-        </div>
+        <!-- Content -->
+        <main class="content-area flex-grow-1">
+
+            <!-- Mobile: categories button -->
+            <button class="sidebar-toggle-btn d-lg-none"
+                    data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">
+                <i class="fa-solid fa-bars"></i> Kategórie
+            </button>
+
+            <!-- Filter bar -->
+            <div class="filter-bar">
+                <p>Filter podľa:</p>
+                <button class="filter-btn">Ceny</button>
+                <button class="filter-btn">Značky</button>
+                <button class="filter-btn">Najpredávanejšie</button>
+            </div>
+
+            <!-- Product grid -->
+            <div class="row g-4 mb-4">
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="product-card">
+                        <img src="./assets/phones/phone-iphone.jpg" alt="Produkt 1" />
+                        <div class="card-body">
+                            <h3>Produkt 1</h3>
+                            <p>Popis produktu 1</p>
+                            <span class="price">€199.99</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="product-card">
+                        <img src="./assets/phones/honor.jpg" alt="Produkt 2" />
+                        <div class="card-body">
+                            <h3>Produkt 2</h3>
+                            <p>Popis produktu 2</p>
+                            <span class="price">€199.99</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="product-card">
+                        <img src="./assets/phones/huawei.jpg" alt="Produkt 3" />
+                        <div class="card-body">
+                            <h3>Produkt 3</h3>
+                            <p>Popis produktu 3</p>
+                            <span class="price">€199.99</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="product-card">
+                        <img src="./assets/phones/motorola.jpg" alt="Produkt 4" />
+                        <div class="card-body">
+                            <h3>Produkt 4</h3>
+                            <p>Popis produktu 4</p>
+                            <span class="price">€199.99</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="product-card">
+                        <img src="./assets/phones/nexus.jpg" alt="Produkt 5" />
+                        <div class="card-body">
+                            <h3>Produkt 5</h3>
+                            <p>Popis produktu 5</p>
+                            <span class="price">€199.99</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="product-card">
+                        <img src="./assets/phones/oppo.jpg" alt="Produkt 6" />
+                        <div class="card-body">
+                            <h3>Produkt 6</h3>
+                            <p>Popis produktu 6</p>
+                            <span class="price">€199.99</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="product-card">
+                        <img src="./assets/phones/samsung.jpg" alt="Produkt 7" />
+                        <div class="card-body">
+                            <h3>Produkt 7</h3>
+                            <p>Popis produktu 7</p>
+                            <span class="price">€199.99</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="product-card">
+                        <img src="./assets/phones/sony.jpg" alt="Produkt 8" />
+                        <div class="card-body">
+                            <h3>Produkt 8</h3>
+                            <p>Popis produktu 8</p>
+                            <span class="price">€199.99</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="product-card">
+                        <img src="./assets/phones/xiaomi.jpg" alt="Produkt 9" />
+                        <div class="card-body">
+                            <h3>Produkt 9</h3>
+                            <p>Popis produktu 9</p>
+                            <span class="price">€199.99</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="paging">
+                <button class="btn-paging prev"><i class="fa-solid fa-arrow-left"></i></button>
+                <ul>
+                    <li class="link">1</li>
+                    <li class="link">2</li>
+                    <li class="link">3</li>
+                </ul>
+                <button class="btn-paging next"><i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+
+        </main>
     </div>
-</div>
 
+    <!-- ── FOOTER ────────────────────────────────────────── -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row g-4 justify-content-center text-center text-md-start">
+                <div class="col-12 col-md-4">
+                    <h4>O nás</h4>
+                    <ul>
+                        <li><a href="#">Kontakt</a></li>
+                        <li><a href="#">Compliance</a></li>
+                        <li><a href="#">Kariéra</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-4">
+                    <h4>Objednávky</h4>
+                    <ul>
+                        <li><a href="#">Stav objednávky</a></li>
+                        <li><a href="#">Stav reklamácie</a></li>
+                        <li><a href="#">Ako začať</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-4">
+                    <h4>Nakupovanie</h4>
+                    <ul>
+                        <li><a href="#">Obchodné pravidlá</a></li>
+                        <li><a href="#">Podmienky reklamácie</a></li>
+                        <li><a href="#">Možnosti doručenia</a></li>
+                        <li><a href="#">Možnosti platby</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
