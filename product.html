@@ -120,20 +120,20 @@
                     proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
                 <p class="product-price">€199.99</p>
 
-                <div class="product-quantity">
-                    <button class="qty-btn" onclick="changeQty(-1)">&#8722;</button>
-                    <input
-                            type="number"
-                            id="qty"
-                            value="1"
-                            min="1"
-                            max="99"
-                            class="qty-input"
-                            oninput="validateQty(this)"
-                    >
-                    <button class="qty-btn" onclick="changeQty(+1)">&#43;</button>
-                    <span class="qty-err" id="qty-err"></span>
-                </div>
+                    <div class="product-quantity">
+                        <button class="qty-btn" onclick="changeQty(-1)">&#8722;</button>
+                        <input
+                                type="number"
+                                id="qty"
+                                value="1"
+                                min="1"
+                                max="99"
+                                class="qty-input"
+                                oninput="validateQty(this)"
+                        />
+                        <button class="qty-btn" onclick="changeQty(+1)">&#43;</button>
+                        <span class="qty-err" id="qty-err"></span>
+                    </div>
 
                 <button class="add-to-cart-btn" onclick="location.href='./cart.html'">Do košíka</button>
                 <!-- script na fungovanie tlacidiek + a - -->

@@ -1,6 +1,6 @@
 .product-detail {
-    display: flex;
-    gap: 50px;
+    /*display: flex;*/
+    /*gap: 50px;*/
     margin-top: 50px;
     margin-bottom: 50px;
 }
@@ -197,13 +197,13 @@
     font-size: 1.2em;
 }
 
-.similar-row {
-    display: flex;
-    gap: 50px;
-}
+/*.similar-row {*/
+/*    display: flex;*/
+/*    gap: 50px;*/
+/*}*/
 
 .similar-products .product {
-    width: 30%;
+    /*width: 30%;*/
     color: white;
     cursor: pointer;
     border: 1px solid #f2f1f1;
