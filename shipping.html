@@ -1,32 +1,311 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles/shipping.css">
-    <title>Doprava</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200..1000&display=swap" rel="stylesheet">
+    <link href="./styles/style.css" rel="stylesheet">
+    <title>Elektroshop – Doprava a Platba</title>
 </head>
 <body>
-    <div class="container">
-        <div class="shipping-logo-wrap">
-            <img src="./assets/logo.png" alt="logo" class="logo" />
+
+    <nav class="navbar main-navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand p-0" href="index.html">
+                <img src="./assets/logo.png" alt="logo" class="logo" />
+            </a>
+            <ul class="navbar-nav align-items-center gap-1 ms-auto">
+                <li class="nav-item">
+                    <a href="./cart.html" class="nav-icon-btn" style="text-decoration:none;">
+                        <i class="fa-solid fa-cart-arrow-down"></i>
+                    </a>
+                </li>
+            </ul>
         </div>
-        <h1>Doručenie</h1>
-        <form action="POST" class="shipping-form">
-            <label for="ulica">Ulica:</label>
-            <input type="text" id="ulica" name="ulica" required>
+    </nav>
 
-            <label for="cislo">Číslo:</label>
-            <input type="text" id="cislo" name="cislo" required>
+    <div class="summary-page">
+        <div class="page-heading">
+            <h1>Doprava a platba</h1>
+            <p>Vyberte si spôsob doručenia a platby za vašu objednávku.</p>
+        </div>
 
-            <label for="psc">PSČ:</label>
-            <input type="text" id="psc" name="psc" required>
+        <div class="summary-grid">
 
-            <label for="mesto">Mesto:</label>
-            <input type="text" id="mesto" name="mesto" required>
+            <div style="display:flex;flex-direction:column;gap:20px;background-color:transparent;">
 
-            <button type="submit">Potvrdiť</button>
-        </form>
+                <div class="panel">
+                    <p class="panel-title">1. Spôsob dopravy</p>
+                    <div class="shipping-options" id="shippingOptions">
+
+                        <label class="ship-option selected" data-price="3.99">
+                            <input type="radio" name="shipping" value="kurier">
+                            <div class="radio-dot"></div>
+                            <div class="ship-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                            <div class="ship-info">
+                            <div class="ship-name">Kuriér</div>
+                            <div class="ship-desc">Doručenie priamo na vašu adresu</div>
+                            </div>
+                            <div class="ship-right">
+                                <span class="ship-price">€3.99</span>
+                                <span class="ship-eta">Doručenie zajtra</span>
+                            </div>
+                        </label>
+
+                        <label class="ship-option" data-price="2.49">
+                            <input type="radio" name="shipping" value="zasielkovna">
+                            <div class="radio-dot"></div>
+                            <div class="ship-icon"><i class="fa-solid fa-store"></i></div>
+                            <div class="ship-info">
+                                <div class="ship-name">Zásielkovňa</div>
+                                <div class="ship-desc">Vyzdvihnutie na výdajnom mieste</div>
+                            </div>
+                            <div class="ship-right">
+                                <span class="ship-price">€2.49</span>
+                                <span class="ship-eta">2 – 3 dni</span>
+                            </div>
+                        </label>
+
+                        <label class="ship-option" data-price="0">
+                            <input type="radio" name="shipping" value="osobny">
+                            <div class="radio-dot"></div>
+                            <div class="ship-icon"><i class="fa-solid fa-shop"></i></div>
+                            <div class="ship-info">
+                                <div class="ship-name">Osobný odber</div>
+                                <div class="ship-desc">Bratislava, Obchodná 12</div>
+                            </div>
+                            <div class="ship-right">
+                                <span class="ship-price free">Zadarmo</span>
+                                <span class="ship-eta">Dnes</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                <div class="panel" id="billing-panel">
+                    <p class="panel-title">2. Fakturačné údaje</p>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="Meno" required>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="Priezvisko" required>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" placeholder="Ulica a číslo domu" required>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" placeholder="Mesto" required>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" placeholder="PSČ" required>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="email" class="form-control" placeholder="E-mail (pre zaslanie faktúry)" required>
+                        </div>
+                    </div>
+
+                    <div class="form-check mt-4">
+                        <input class="form-check-input" type="checkbox" id="differentDelivery" onchange="toggleDeliveryAddress()">
+                        <label class="form-check-label" for="differentDelivery" style="font-size: 0.9rem; cursor: pointer; font-weight: 600;">
+                            Doručiť na inú adresu ako fakturačnú
+                        </label>
+                    </div>
+                </div>
+
+                <div class="panel" id="delivery-panel">
+                    <p class="panel-title">Dodacia adresa</p>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="Meno príjemcu">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="Priezvisko príjemcu">
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" placeholder="Ulica a číslo">
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" placeholder="Mesto">
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" placeholder="PSČ">
+                        </div>
+                    </div>
+                </div>
+                
+
+                <div class="panel">
+                    <p class="panel-title">3. Spôsob platby</p>
+                    <div class="shipping-options" id="paymentOptions">
+                        
+                        <label class="ship-option">
+                            <input type="radio" name="payment" value="card-online" onchange="handlePaymentSelection(this)">
+                            <div class="radio-dot"></div>
+                            <div class="ship-icon"><i class="fa-solid fa-credit-card"></i></div>
+                            <div class="ship-info">
+                                <div class="ship-name">Kartou online</div>
+                                <div class="ship-desc">Okamžitá platba cez bránu</div>
+                            </div>
+                        </label>
+
+                        <div class="card-form-container" id="card-form" style="display:none; padding: 15px; background: #f8f9fa; border-radius: 8px; margin: 10px 0; flex-direction: column; gap: 10px; border: 1px solid #dee2e6;">
+                            <input type="text" class="form-control" placeholder="Číslo karty" maxlength="19" oninput="formatCardNumber(this)">
+                            <div style="display:flex; gap:10px;">
+                                <input type="text" class="form-control" placeholder="MM / YY" maxlength="5" oninput="formatExpiry(this)">
+                                <input type="text" class="form-control" placeholder="CVV" maxlength="3">
+                            </div>
+                        </div>
+
+                        <label class="ship-option">
+                            <input type="radio" name="payment" value="cod" onchange="handlePaymentSelection(this)">
+                            <div class="radio-dot"></div>
+                            <div class="ship-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                            <div class="ship-info">
+                                <div class="ship-name">Dobierka / Pri prevzatí</div>
+                                <div class="ship-desc">Hotovosťou alebo kartou kuriérovi</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="totals-panel">
+                    <p class="panel-title">Cenové zhrnutie</p>
+
+                     
+
+                    <div class="totals-row">
+                        <span class="totals-label">Produkty</span>
+                        <span class="totals-value">€2 159.96</span>
+                    </div>
+                    <div class="totals-row">
+                        <span class="totals-label">Doprava</span>
+                        <span class="totals-value" id="shippingVal">€3.99</span>
+                    </div>
+
+                    <hr class="totals-divider">
+
+                    <div class="totals-final-row">
+                        <span class="totals-final-label">Celkom</span>
+                        <span class="totals-final-value" id="totalVal">€2 163.95</span>
+                    </div>
+
+                    <button class="btn-order" onclick="submitOrder()">
+                        Dokončiť objednávku
+                    </button>
+                    <a href="cart.html" class="btn-back-summary">
+                        <i class="fa-solid fa-arrow-left"></i> Späť do košíka
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script>
+        const SUBTOTAL = 2159.96;
+        const FREE_THRESHOLD = 50;
+
+        const shipOptions = document.querySelectorAll('#shippingOptions .ship-option');
+        const payOptions = document.querySelectorAll('#paymentOptions .ship-option');
+        const shippingVal = document.getElementById('shippingVal');
+        const totalVal    = document.getElementById('totalVal');
+        const nudgeBar    = document.getElementById('nudgeBar');
+
+        function fmt(n) {
+            return '€' + n.toLocaleString('sk-SK', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        // --- Shipping Logic ---
+        function updatePrice(price) {
+            if (price === 0) {
+                shippingVal.textContent = 'Zadarmo';
+                shippingVal.classList.add('free');
+            } else {
+                shippingVal.textContent = fmt(price);
+                shippingVal.classList.remove('free');
+            }
+            totalVal.textContent = fmt(SUBTOTAL + price);
+        }
+
+        shipOptions.forEach(opt => {
+            opt.addEventListener('click', () => {
+                shipOptions.forEach(o => o.classList.remove('selected'));
+                opt.classList.add('selected');
+                const radio = opt.querySelector('input[type=radio]');
+                radio.checked = true;
+                
+                updatePrice(parseFloat(opt.dataset.price));
+                toggleAddressForm(radio.value === 'kurier');
+            });
+        });
+
+
+    // Úprava v event listeneri pre dopravu (aby sme zachovali logiku osobného odberu)
+    shipOptions.forEach(opt => {
+        opt.addEventListener('click', () => {
+            shipOptions.forEach(o => o.classList.remove('selected'));
+            opt.classList.add('selected');
+            const radio = opt.querySelector('input[type=radio]');
+            radio.checked = true;
+            
+            updatePrice(parseFloat(opt.dataset.price));
+
+            const diffDeliveryContainer = document.getElementById('differentDelivery').parentElement;
+            if (radio.value === 'osobny') {
+                diffDeliveryContainer.style.display = 'none';
+                document.getElementById('delivery-panel').style.display = 'none';
+                document.getElementById('differentDelivery').checked = false;
+            } else {
+                diffDeliveryContainer.style.display = 'block';
+                toggleDeliveryAddress();
+            }
+        });
+    });
+        function toggleDeliveryAddress() {
+            const checkbox = document.getElementById('differentDelivery');
+            const deliveryPanel = document.getElementById('delivery-panel');
+
+            if (checkbox.checked) {
+                deliveryPanel.style.display = 'block';
+            } else {
+                deliveryPanel.style.display = 'none';
+            }
+        }
+        // --- Payment Logic ---
+        function handlePaymentSelection(input) {
+            // Visual feedback for labels
+            payOptions.forEach(o => o.classList.remove('selected'));
+            input.closest('.ship-option').classList.add('selected');
+
+            // Card form visibility
+            const cardForm = document.getElementById('card-form');
+            cardForm.style.display = (input.value === 'card-online') ? 'flex' : 'none';
+        }
+
+        function formatCardNumber(input) {
+            let v = input.value.replace(/\D/g, '').substring(0,16);
+            input.value = v.match(/.{1,4}/g)?.join(' ') || v;
+        }
+
+        function formatExpiry(input) {
+            let v = input.value.replace(/\D/g, '').substring(0,4);
+            if (v.length > 2) v = v.substring(0,2) + ' / ' + v.substring(2);
+            input.value = v;
+        }
+
+        // --- Final Submission ---
+        function submitOrder() {
+            alert('Objednávka bola úspešne prijatá! Ďakujeme za nákup.');
+            window.location.href = 'index.html';
+        }
+
+        // Initialize nudge bar
+        if (SUBTOTAL >= FREE_THRESHOLD) nudgeBar.style.display = 'flex';
+        updatePrice(3.99); // Initial load price
+    </script>
+
 </body>
 </html>

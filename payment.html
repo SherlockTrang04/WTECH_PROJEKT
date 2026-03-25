@@ -1,228 +1,228 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200..1000&display=swap" rel="stylesheet">
-    <link href="./styles/style.css" rel="stylesheet">
-    <title>Platba</title>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200..1000&display=swap" rel="stylesheet">
+        <link href="./styles/style.css" rel="stylesheet">
+        <title>Platba</title>
 
-</head>
-<body>
-<!-- ── NAVBAR ───────────────────────────────────────── -->
-    <nav class="navbar main-navbar navbar-expand-lg">
-        <div class="container-fluid">
+    </head>
+    <body>
+    <!-- ── NAVBAR ───────────────────────────────────────── -->
+        <nav class="navbar main-navbar navbar-expand-lg">
+            <div class="container-fluid">
 
-            <!-- Logo -->
-            <a class="navbar-brand p-0" href="index.html">
-                <img src="./assets/logo.png" alt="logo" class="logo" />
-            </a>
+                <!-- Logo -->
+                <a class="navbar-brand p-0" href="index.html">
+                    <img src="./assets/logo.png" alt="logo" class="logo" />
+                </a>
 
-            <!-- Mobile: toggler -->
-            <button class="navbar-toggler ms-auto me-2" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#mainNavCollapse"
-                    aria-controls="mainNavCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+                <!-- Mobile: toggler -->
+                <button class="navbar-toggler ms-auto me-2" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#mainNavCollapse"
+                        aria-controls="mainNavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            <!-- Collapsible section -->
-            <div class="collapse navbar-collapse" id="mainNavCollapse">
+                <!-- Collapsible section -->
+                <div class="collapse navbar-collapse" id="mainNavCollapse">
 
-                <!-- Search bar - centred -->
-                <div class="mx-auto my-2 my-lg-0" style="width:100%;max-width:500px;">
-                    <input type="text" placeholder="Hľadať..." class="searchbar" />
+                    <!-- Search bar - centred -->
+                    <div class="mx-auto my-2 my-lg-0" style="width:100%;max-width:500px;">
+                        <input type="text" placeholder="Hľadať..." class="searchbar" />
+                    </div>
+
+                    <!-- Icons -->
+                    <ul class="navbar-nav align-items-center gap-1 ms-lg-3">
+                        <li class="nav-item">
+                            <button class="nav-icon-btn" aria-label="Hľadať">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <a href="cart.html" class="nav-icon-btn" style="text-decoration:none;">
+                                <i class="fa-solid fa-cart-arrow-down"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <button class="nav-icon-btn dropdown-toggle" data-bs-toggle="dropdown"
+                                    aria-expanded="false" style="background:transparent;border:none;">
+                                <i class="fa-solid fa-user"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="./login.html">Prihlásiť sa</a></li>
+                                <li><a class="dropdown-item" href="./registration.html">Registrovať sa</a></li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
+            </div>
+        </nav>
 
-                <!-- Icons -->
-                <ul class="navbar-nav align-items-center gap-1 ms-lg-3">
-                    <li class="nav-item">
-                        <button class="nav-icon-btn" aria-label="Hľadať">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <a href="cart.html" class="nav-icon-btn" style="text-decoration:none;">
-                            <i class="fa-solid fa-cart-arrow-down"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <button class="nav-icon-btn dropdown-toggle" data-bs-toggle="dropdown"
-                                aria-expanded="false" style="background:transparent;border:none;">
-                            <i class="fa-solid fa-user"></i>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="./login.html">Prihlásiť sa</a></li>
-                            <li><a class="dropdown-item" href="./registration.html">Registrovať sa</a></li>
+    <div class="payment-wrapper">
+
+        <div class="payment-section">
+            <h2>Zvoľte spôsob doručenia:</h2>
+
+            <div class="option-row">
+                <input type="checkbox" id="pickup" name="delivery" onchange="handleDelivery(this)"/>
+                <label for="pickup">Osobný odber v predajni</label>
+            </div>
+
+            <div class="option-row">
+                <input type="checkbox" id="delivery-address" name="delivery" onchange="handleDelivery(this)"/>
+                <label for="delivery-address">Doručenie na adresu</label>
+            </div>
+
+            <div class="address-form" id="address-form">
+                <div class="address-row">
+                    <label for="street">Ulica:</label>
+                    <input type="text" id="street" name="street" class="address-input"/>
+                </div>
+                <div class="address-row">
+                    <label for="house-number">Číslo:</label>
+                    <input type="text" id="house-number" name="house-number" class="address-input"/>
+                </div>
+                <div class="address-row">
+                    <label for="zip">PSČ:</label>
+                    <input type="text" id="zip" name="zip" class="address-input"/>
+                </div>
+                <div class="address-row">
+                    <label for="city">Mesto:</label>
+                    <input type="text" id="city" name="city" class="address-input"/>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="payment-section">
+            <h2>Zvoľte spôsob platby:</h2>
+
+            <div class="option-row">
+                <input type="checkbox" id="card-online" name="payment" onchange="handlePayment(this)"/>
+                <label for="card-online">Kartou online</label>
+            </div>
+
+            <div class="card-form" id="card-form">
+                <input type="text" class="card-input full" placeholder="Číslo karty" maxlength="19"
+                    oninput="formatCardNumber(this)"/>
+                <div class="card-row">
+                    <input type="text" class="card-input" placeholder="Rok platnosti" maxlength="5"
+                        oninput="formatExpiry(this)"/>
+                    <input type="text" class="card-input" placeholder="CVV" maxlength="3"/>
+                </div>
+            </div>
+
+            <div class="option-row">
+                <input type="checkbox" id="card-on-pickup" name="payment" onchange="handlePayment(this)"/>
+                <label for="card-on-pickup">Kartou pri vyzdvihnutí</label>
+            </div>
+        </div>
+
+        <div class="payment-footer">
+            <button class="pay-btn" onclick="submitPayment()">Zaplatiť</button>
+        </div>
+    </div>
+        <!-- ── FOOTER ────────────────────────────────────────── -->
+        <footer class="main-footer">
+            <div class="container">
+                <div class="row g-4 justify-content-center text-center text-md-start">
+                    <div class="col-12 col-md-4">
+                        <h4>O nás</h4>
+                        <ul>
+                            <li><a href="#">Kontakt</a></li>
+                            <li><a href="#">Compliance</a></li>
+                            <li><a href="#">Kariéra</a></li>
                         </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-<div class="payment-wrapper">
-
-    <div class="payment-section">
-        <h2>Zvoľte spôsob doručenia:</h2>
-
-        <div class="option-row">
-            <input type="checkbox" id="pickup" name="delivery" onchange="handleDelivery(this)"/>
-            <label for="pickup">Osobný odber</label>
-        </div>
-
-        <div class="option-row">
-            <input type="checkbox" id="delivery-address" name="delivery" onchange="handleDelivery(this)"/>
-            <label for="delivery-address">Doručenie na adresu</label>
-        </div>
-
-        <div class="address-form" id="address-form">
-            <div class="address-row">
-                <label for="street">Ulica:</label>
-                <input type="text" id="street" name="street" class="address-input"/>
-            </div>
-            <div class="address-row">
-                <label for="house-number">Číslo:</label>
-                <input type="text" id="house-number" name="house-number" class="address-input"/>
-            </div>
-            <div class="address-row">
-                <label for="zip">PSČ:</label>
-                <input type="text" id="zip" name="zip" class="address-input"/>
-            </div>
-            <div class="address-row">
-                <label for="city">Mesto:</label>
-                <input type="text" id="city" name="city" class="address-input"/>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="payment-section">
-        <h2>Zvoľte spôsob platby:</h2>
-
-        <div class="option-row">
-            <input type="checkbox" id="card-online" name="payment" onchange="handlePayment(this)"/>
-            <label for="card-online">Kartou online</label>
-        </div>
-
-        <div class="card-form" id="card-form">
-            <input type="text" class="card-input full" placeholder="Číslo karty" maxlength="19"
-                   oninput="formatCardNumber(this)"/>
-            <div class="card-row">
-                <input type="text" class="card-input" placeholder="Rok platnosti" maxlength="5"
-                       oninput="formatExpiry(this)"/>
-                <input type="text" class="card-input" placeholder="CVV" maxlength="3"/>
-            </div>
-        </div>
-
-        <div class="option-row">
-            <input type="checkbox" id="card-on-pickup" name="payment" onchange="handlePayment(this)"/>
-            <label for="card-on-pickup">Kartou pri vyzdvihnutí</label>
-        </div>
-    </div>
-
-    <div class="payment-footer">
-        <button class="pay-btn" onclick="submitPayment()">Zaplatiť</button>
-    </div>
-</div>
-    <!-- ── FOOTER ────────────────────────────────────────── -->
-    <footer class="main-footer">
-        <div class="container">
-            <div class="row g-4 justify-content-center text-center text-md-start">
-                <div class="col-12 col-md-4">
-                    <h4>O nás</h4>
-                    <ul>
-                        <li><a href="#">Kontakt</a></li>
-                        <li><a href="#">Compliance</a></li>
-                        <li><a href="#">Kariéra</a></li>
-                    </ul>
-                </div>
-                <div class="col-12 col-md-4">
-                    <h4>Objednávky</h4>
-                    <ul>
-                        <li><a href="#">Stav objednávky</a></li>
-                        <li><a href="#">Stav reklamácie</a></li>
-                        <li><a href="#">Ako začať</a></li>
-                    </ul>
-                </div>
-                <div class="col-12 col-md-4">
-                    <h4>Nakupovanie</h4>
-                    <ul>
-                        <li><a href="#">Obchodné pravidlá</a></li>
-                        <li><a href="#">Podmienky reklamácie</a></li>
-                        <li><a href="#">Možnosti doručenia</a></li>
-                        <li><a href="#">Možnosti platby</a></li>
-                    </ul>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <h4>Objednávky</h4>
+                        <ul>
+                            <li><a href="#">Stav objednávky</a></li>
+                            <li><a href="#">Stav reklamácie</a></li>
+                            <li><a href="#">Ako začať</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <h4>Nakupovanie</h4>
+                        <ul>
+                            <li><a href="#">Obchodné pravidlá</a></li>
+                            <li><a href="#">Podmienky reklamácie</a></li>
+                            <li><a href="#">Možnosti doručenia</a></li>
+                            <li><a href="#">Možnosti platby</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-    </footer>
+        </footer>
 
-<script>
-    //iba jedna moznost pri donaske
-    function handleDelivery(clicked) {
-        const checkBoxes = document.querySelectorAll('input[name="delivery"]');
-        checkBoxes.forEach(checkBox => {
-            if (checkBox !== clicked) checkBox.checked = false;
-        });
+    <script>
+        //iba jedna moznost pri donaske
+        function handleDelivery(clicked) {
+            const checkBoxes = document.querySelectorAll('input[name="delivery"]');
+            checkBoxes.forEach(checkBox => {
+                if (checkBox !== clicked) checkBox.checked = false;
+            });
 
-        const adressForm = document.getElementById('address-form');
+            const adressForm = document.getElementById('address-form');
 
-        if (clicked.id === 'delivery-address' && clicked.checked) {
-            adressForm.style.display = 'flex';
-            loadUserAddress();
-        } else {
-            adressForm.style.display = 'none';
-            clearAddressForm();
+            if (clicked.id === 'delivery-address') {
+                adressForm.style.display = 'flex';
+                loadUserAddress();
+            } else {
+                adressForm.style.display = 'none';
+                clearAddressForm();
+            }
         }
-    }
 
-    function loadUserAddress() {
-        //TODO nacitanie udajov so DB
-    }
-
-    function fillAddressForm() {
-        //TODO autodoplnenie addresy
-    }
-
-    function clearAddressForm() {
-        document.getElementById('street').value = '';
-        document.getElementById('house-number').value = '';
-        document.getElementById('zip').value = '';
-        document.getElementById('city').value = '';
-    }
-
-    function handlePayment(clicked) {
-        const checkBoxes = document.querySelectorAll('input[name="payment"]');
-        checkBoxes.forEach(checkBox => {
-            if (checkBox !== clicked) checkBox.checked = false;
-        });
-
-        const cardForm = document.getElementById('card-form');
-        cardForm.style.display = (clicked.id === 'card-online' && clicked.checked) ? 'flex' : 'none';
-    }
-
-    function formatCardNumber(input) {
-        let value = input.value.replace(/\D/g, '');
-        value =  value.match(/.{1,4}/g?.join(' ') || value);
-        input.value = value;
-    }
-
-    function formatExpiry(input) {
-        let value = input.value.replace(/\D/g, '');
-        if (value.length > 3) {
-            value = value.slice(0,2) + '/' + value.slice(2, 4);
+        function loadUserAddress() {
+            //TODO nacitanie udajov so DB
         }
-        input.value = value;
-    }
 
-    function submitPayment() {}
-</script>
-<!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</body>
-</html>
+        function fillAddressForm() {
+            //TODO autodoplnenie addresy
+        }
+
+        function clearAddressForm() {
+            document.getElementById('street').value = '';
+            document.getElementById('house-number').value = '';
+            document.getElementById('zip').value = '';
+            document.getElementById('city').value = '';
+        }
+
+        function handlePayment(clicked) {
+            const checkBoxes = document.querySelectorAll('input[name="payment"]');
+            checkBoxes.forEach(checkBox => {
+                if (checkBox !== clicked) checkBox.checked = false;
+            });
+
+            const cardForm = document.getElementById('card-form');
+            cardForm.style.display = (clicked.id === 'card-online' && clicked.checked) ? 'flex' : 'none';
+        }
+
+        function formatCardNumber(input) {
+            let value = input.value.replace(/\D/g, '');
+            value =  value.match(/.{1,4}/g?.join(' ') || value);
+            input.value = value;
+        }
+
+        function formatExpiry(input) {
+            let value = input.value.replace(/\D/g, '');
+            if (value.length > 3) {
+                value = value.slice(0,2) + '/' + value.slice(2, 4);
+            }
+            input.value = value;
+        }
+
+        function submitPayment() {}
+    </script>
+    <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+    </body>
+    </html>
