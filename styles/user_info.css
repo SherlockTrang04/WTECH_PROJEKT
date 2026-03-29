@@ -278,7 +278,7 @@
             padding: 24px 28px;
             background-color: rgba(255,255,255,0.03);
             margin-bottom: 20px;
-            width: 50%;
+            width: 100%;
         }
  
         .info-card-title {
@@ -298,6 +298,7 @@
             padding: 10px 0;
             border-bottom: 1px solid rgba(242,241,241,0.07);
             background-color: transparent;
+            max-width: 1080px;
         }
  
         .info-row:last-child {

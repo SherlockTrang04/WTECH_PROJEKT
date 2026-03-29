@@ -9,7 +9,7 @@
     <title>Elektroshop – Administrácia</title>
     <style>
         body { font-family: 'Nunito', sans-serif; background-color: #f4f7f6; }
-        .sidebar { height: 100vh; background: #2c3e50; color: white; position: fixed; width: 250px; transition: 0.3s; }
+        .sidebar { height: 100vh; background: #28056d; color: white; position: fixed; width: 250px; transition: 0.3s; }
         .sidebar a { color: #bdc3c7; text-decoration: none; padding: 15px 20px; display: block; }
         .sidebar a:hover, .sidebar a.active { background: #34495e; color: white; border-left: 4px solid #3498db; }
         .main-content { margin-left: 250px; padding: 30px; }
@@ -22,7 +22,7 @@
 
     <div class="sidebar d-flex flex-column">
         <div class="p-4 text-center">
-            <img src="./assets/logo.png" alt="logo" style="max-width: 80%; filter: brightness(0) invert(1);">
+            <img src="./assets/logo.png" alt="logo" style="max-width: 80%;">
         </div>
         <nav class="flex-grow-1">
             <a href="#" onclick="showSection('orders')"><i class="fa-solid fa-cart-shopping me-2"></i> Objednávky</a>
@@ -109,60 +109,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const productModal = new bootstrap.Modal(document.getElementById('productModal'));
-        
-        function openProductModal() {
-            document.getElementById('productForm').reset();
-            document.getElementById('modalTitle').innerText = "Pridať nový produkt";
-            productModal.show();
-        }
 
-        function saveProduct() {
-            const name = document.getElementById('p-name').value;
-            const price = document.getElementById('p-price').value;
-            const img1 = document.getElementById('p-img1').value;
-            const img2 = document.getElementById('p-img2').value;
-
-            if(!name || !price || !img1 || !img2) {
-                alert("Prosím vyplňte všetky polia vrátane oboch fotografií.");
-                return;
-            }
-
-            // Pridanie do tabuľky (simulácia)
-            const tbody = document.getElementById('product-list');
-            const row = `<tr>
-                <td>
-                    <img src="${img1}" class="product-img-preview">
-                    <img src="${img2}" class="product-img-preview">
-                </td>
-                <td><strong>${name}</strong><br><small class="text-muted">Nový produkt...</small></td>
-                <td>€${parseFloat(price).toFixed(2)}</td>
-                <td class="text-end">
-                    <button class="btn btn-sm btn-outline-primary me-2" onclick="editProduct('${name}')"><i class="fa-solid fa-pen"></i></button>
-                    <button class="btn btn-sm btn-outline-danger" onclick="deleteProduct(this)"><i class="fa-solid fa-trash"></i></button>
-                </td>
-            </tr>`;
-            
-            tbody.insertAdjacentHTML('afterbegin', row);
-            productModal.hide();
-        }
-
-        function deleteProduct(btn) {
-            if(confirm('Naozaj chcete vymazať tento produkt?')) {
-                btn.closest('tr').remove();
-            }
-        }
-
-        function editProduct(name) {
-            document.getElementById('modalTitle').innerText = "Upraviť: " + name;
-            document.getElementById('p-name').value = name;
-            productModal.show();
-        }
-
-        function showSection(section) {
-            console.log("Prepínam na: " + section);
-        }
-    </script>
 </body>
 </html>
