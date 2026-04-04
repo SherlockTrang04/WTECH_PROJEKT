@@ -13,8 +13,10 @@
     </div>
     <div class="registration-container">
         <h1>Registrácia</h1>
-        <form action="/register" method="post">
-            <label for="username">Meno a priezvisko:</label>
+        <form action="/registration" method="post">
+             @csrf
+            
+            <label for="name">Meno a priezvisko:</label>
             <input type="text" id="name" name="name" required><br><br>
 
             <label for="username">Používateľské meno:</label>
