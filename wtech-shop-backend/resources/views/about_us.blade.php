@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap 5 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <title>O nás</title>
+</head>
+<body>
+<!-- ── NAVBAR ───────────────────────────────────────── -->
+    <nav class="navbar main-navbar navbar-expand-lg">
+        <div class="container-fluid">
+
+            <!-- Logo -->
+            <a class="navbar-brand p-0" href="index.html">
+                <img src="./assets/logo.png" alt="logo" class="logo" />
+            </a>
+
+            <!-- Mobile: toggler -->
+            <button class="navbar-toggler ms-auto me-2" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#mainNavCollapse"
+                    aria-controls="mainNavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Collapsible section -->
+            <div class="collapse navbar-collapse" id="mainNavCollapse">
+
+                <!-- Search bar - centred -->
+                <div class="mx-auto my-2 my-lg-0" style="width:100%;max-width:500px;">
+                    <input type="text" placeholder="Hľadať..." class="searchbar" />
+                </div>
+
+                <!-- Icons -->
+                <ul class="navbar-nav align-items-center gap-1 ms-lg-3">
+                    <li class="nav-item">
+                        <button class="nav-icon-btn" aria-label="Hľadať">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <a href="cart.html" class="nav-icon-btn" style="text-decoration:none;">
+                            <i class="fa-solid fa-cart-arrow-down"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <button class="nav-icon-btn dropdown-toggle" data-bs-toggle="dropdown"
+                                aria-expanded="false" style="background:transparent;border:none;" href="./user_info.html">
+                            <i class="fa-solid fa-user"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="./login.html">Prihlásiť sa</a></li>
+                            <li><a class="dropdown-item" href="./registration.html">Registrovať sa</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+<div class="about-wrapper">
+    <div class="about-info">
+        <h1>O nás</h1>
+
+        <div class="info-row">
+            <span class="info-label">Adresa:</span>
+            <span class="info-value">Ulica 123, 811 01 Bratislava</span>
+        </div>
+
+        <div class="info-hours">
+            <p class="hours-title">Otváracie hodiny</p>
+            <div class="hours-row">
+                <span class="hours-label">Pondelok – Piatok:</span>
+                <span class="hours-value">9:00 – 21:00</span>
+            </div>
+            <div class="hours-row">
+                <span class="hours-label">Sobota-Nedeľa:</span>
+                <span class="hours-value">10:00 - 20:00</span>
+            </div>
+        </div>
+        <p class="map-label">Nájdete nás na adrese</p>
+    </div>
+    <div class="about-map">
+        <a href="https://maps.app.goo.gl/6o9SAgQzZxBe98UG8" target="_blank" class="map-link">Link na GoogleMaps</a>
+        <!-- <iframe
+            src="https://www.google.com/maps/embed?pb=YOUR_EMBED_CODE_HERE"
+            width="100%"
+            height="400"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe> -->
+    </div>
+</div>
+    <!-- ── FOOTER ────────────────────────────────────────── -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row g-4 justify-content-center text-center text-md-start">
+                <div class="col-12 col-md-4">
+                    <h4>O nás</h4>
+                    <ul>
+                        <li><a href="#">Kontakt</a></li>
+                        <li><a href="#">Compliance</a></li>
+                        <li><a href="#">Kariéra</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-4">
+                    <h4>Objednávky</h4>
+                    <ul>
+                        <li><a href="./orderstatus.html">Stav objednávky</a></li>
+                        <li><a href="./rezervationstatus.html">Stav reklamácie</a></li>
+                        <li><a href="#">Ako začať</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-4">
+                    <h4>Nakupovanie</h4>
+                    <ul>
+                        <li><a href="#">Obchodné pravidlá</a></li>
+                        <li><a href="#">Podmienky reklamácie</a></li>
+                        <li><a href="#">Možnosti doručenia</a></li>
+                        <li><a href="#">Možnosti platby</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

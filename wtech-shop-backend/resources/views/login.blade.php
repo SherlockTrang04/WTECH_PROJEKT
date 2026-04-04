@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <title>Login Page</title>
+
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(140deg, #190442 0%, #0f0533 50%, #0b0133 100%);
+            color: #f2f1f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="img-login">
+        <img src="./assets/reg_img.jpg" alt="login image">
+    </div>
+    <div class="login-container">
+        <h1>Prihlásenie</h1>
+        <form action="post" class="login-form">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Heslo:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Prihlásiť sa</button>
+
+            <p class="alt-text">Alebo</p>
+            <button type="button" class="alt-btn">  <i class="fa-brands fa-google"></i>  Prihlás sa pomocou Gmail-u</button>
+            <button type="button" class="alt-btn"><i class="fa-brands fa-facebook"></i>  Prihlás sa pomocou Facebook-u</button>
+
+            <a href="./registration.html" class="back-link">Nemáš účet? Zaregistruj sa</a>
+        </form>
+    </div>
+</body>
+</html>

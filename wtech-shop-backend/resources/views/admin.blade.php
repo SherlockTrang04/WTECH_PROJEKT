@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <title>Elektroshop – Administrácia</title>
+    <style>
+        body { font-family: 'Nunito', sans-serif; background-color: #f4f7f6; }
+        .sidebar { height: 100vh; background: #28056d; color: white; position: fixed; width: 250px; transition: 0.3s; }
+        .sidebar a { color: #bdc3c7; text-decoration: none; padding: 15px 20px; display: block; }
+        .sidebar a:hover, .sidebar a.active { background: #34495e; color: white; border-left: 4px solid #3498db; }
+        .main-content { margin-left: 250px; padding: 30px; }
+        .stat-card { background: white; border-radius: 10px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .logout-btn { color: #e74c3c !important; margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); }
+        .product-img-preview { width: 50px; height: 50px; object-fit: cover; border-radius: 5px; margin-right: 5px; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar d-flex flex-column">
+        <div class="p-4 text-center">
+            <img src="./assets/logo.png" alt="logo" style="max-width: 80%;">
+        </div>
+        <nav class="flex-grow-1">
+            <a href="#" onclick="showSection('orders')"><i class="fa-solid fa-cart-shopping me-2"></i> Objednávky</a>
+            <a href="#" onclick="showSection('products')" class="active" id="prod-link"><i class="fa-solid fa-box me-2"></i> Produkty</a>
+        </nav>
+        <a href="admin-login.html" class="logout-btn"><i class="fa-solid fa-right-from-bracket me-2"></i> Odhlásiť sa</a>
+    </div>
+
+    <div class="main-content">
+        <div id="products-section">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Správa produktov</h2>
+                <button class="btn btn-success" onclick="openProductModal()"><i class="fa-solid fa-plus me-2"></i>Nový produkt</button>
+            </div>
+
+            <div class="stat-card">
+                <table class="table align-middle">
+                    <thead>
+                        <tr>
+                            <th>Foto</th>
+                            <th>Názov</th>
+                            <th>Cena</th>
+                            <th class="text-end">Akcie</th>
+                        </tr>
+                    </thead>
+                    <tbody id="product-list">
+                        <tr>
+                            <td>
+                                <img src="https://placehold.co/100x100" class="product-img-preview">
+                                <img src="https://placehold.co/100x100" class="product-img-preview">
+                            </td>
+                            <td><strong>iPhone 15 Pro</strong><br><small class="text-muted">Špičkový smartfón...</small></td>
+                            <td>€1 199.00</td>
+                            <td class="text-end">
+                                <button class="btn btn-sm btn-outline-primary me-2" onclick="editProduct('iPhone 15 Pro')"><i class="fa-solid fa-pen"></i></button>
+                                <button class="btn btn-sm btn-outline-danger" onclick="deleteProduct(this)"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="productModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Pridať nový produkt</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="productForm">
+                        <div class="row g-3">
+                            <div class="col-md-8">
+                                <label class="form-label">Názov produktu</label>
+                                <input type="text" class="form-control" id="p-name" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Cena (€)</label>
+                                <input type="number" step="0.01" class="form-control" id="p-price" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Opis produktu</label>
+                                <textarea class="form-control" rows="3" id="p-desc" required></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Hlavná fotografia (URL)</label>
+                                <input type="text" class="form-control" id="p-img1" placeholder="http://..." required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Vedľajšia fotografia (URL)</label>
+                                <input type="text" class="form-control" id="p-img2" placeholder="http://..." required>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zrušiť</button>
+                    <button type="button" class="btn btn-primary" onclick="saveProduct()">Uložiť produkt</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
