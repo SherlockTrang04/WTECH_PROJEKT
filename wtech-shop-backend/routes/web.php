@@ -20,6 +20,8 @@ Route::get('/login', function () {
 Route::get('/registration', [AuthController::class, 'showForm']);
 Route::post('/registration', [AuthController::class, 'register']);
 
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 Route::get('/user_info', function () {
     return view('user_info');
 });

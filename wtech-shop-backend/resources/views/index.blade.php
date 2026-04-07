@@ -53,12 +53,16 @@
                     </li>
                     <li class="nav-item dropdown">
                         <button class="nav-icon-btn dropdown-toggle" data-bs-toggle="dropdown"
-                                aria-expanded="false" style="background:transparent;border:none;" href="./user_info.html">
+                                aria-expanded="false" style="background:transparent;border:none;" href="/user_info">
                             <i class="fa-solid fa-user"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="./login.html">Prihlásiť sa</a></li>
-                            <li><a class="dropdown-item" href="./registration.html">Registrovať sa</a></li>
+                            <li><a class="dropdown-item" href="/login">Prihlásiť sa</a></li>
+                            <li><a class="dropdown-item" href="/registration">Registrovať sa</a></li>
+                            <form method="POST" action="/logout">
+                                @csrf
+                                <button type="submit" class="dropdown-item border-0 bg-transparent">Odhlásiť sa</button>
+                            </form>
                         </ul>
                     </li>
                 </ul>
