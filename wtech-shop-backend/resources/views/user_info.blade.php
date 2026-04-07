@@ -43,7 +43,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="./login.html">Prihlásiť sa</a></li>
-                            <li><a class="dropdown-item" href="./registration.html">Registrovať sa</a></li>
+                            <li><a class="dropdown-item" href="/registration">Registrovať sa</a></li>
                         </ul>
                     </li>
                 </ul>
