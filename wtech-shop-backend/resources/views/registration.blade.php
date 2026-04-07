@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">\
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <title>Regitrácia</title>
 </head>
 <body>
     <div class="img-registration">
-        <img src="./assets/reg_img.jpg" alt="registration image">
+        <img src="{{ asset('assets/reg_img.jpg') }}" alt="registration image">
     </div>
     <div class="registration-container">
         <h1>Registrácia</h1>

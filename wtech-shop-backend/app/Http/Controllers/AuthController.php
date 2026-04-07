@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
     public function showForm()
     {
-        return view('registration'); 
+        return view('registration');
     }
 
     public function register(Request $request)
@@ -33,6 +33,20 @@ class AuthController extends Controller
         ]);
 
         return redirect('/')->with('success', 'Registrácia prebehla úspešne!');
+    }
+
+    public function login(Request $request) {
+        $credentials = $request->validate([
+            'email'    => 'required|email',
+            'password' => 'required',
+        ]);
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect('/');
+        }
+        return back()->withErrors([
+            'email' => 'Nespravny email alebo heslo.',
+        ]);
     }
 
     public function logout(Request $request) {

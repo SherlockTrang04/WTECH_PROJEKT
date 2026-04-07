@@ -16,6 +16,7 @@ Route::get('/product_list', function () {
 Route::get('/login', function () {
     return view('login');
 });
+Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/registration', [AuthController::class, 'showForm']);
 Route::post('/registration', [AuthController::class, 'register']);

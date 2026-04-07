@@ -25,11 +25,12 @@
 </head>
 <body>
     <div class="img-login">
-        <img src="./assets/reg_img.jpg" alt="login image">
+        <img src="{{asset ('assets/reg_img.jpg')}}" alt="login image">
     </div>
     <div class="login-container">
         <h1>Prihlásenie</h1>
-        <form action="post" class="login-form">
+        <form action="/login" method="post" class="login-form">
+            @csrf
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
 
@@ -42,7 +43,7 @@
             <button type="button" class="alt-btn">  <i class="fa-brands fa-google"></i>  Prihlás sa pomocou Gmail-u</button>
             <button type="button" class="alt-btn"><i class="fa-brands fa-facebook"></i>  Prihlás sa pomocou Facebook-u</button>
 
-            <a href="./registration.html" class="back-link">Nemáš účet? Zaregistruj sa</a>
+            <a href="/registration" class="back-link">Nemáš účet? Zaregistruj sa</a>
         </form>
     </div>
 </body>

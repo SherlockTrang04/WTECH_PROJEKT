@@ -53,7 +53,7 @@
                     </li>
                     <li class="nav-item dropdown">
                         <button class="nav-icon-btn dropdown-toggle" data-bs-toggle="dropdown"
-                                aria-expanded="false" style="background:transparent;border:none;" href="/user_info">
+                                aria-expanded="false" style="background:transparent;border:none;" href="./user_info.html">
                             <i class="fa-solid fa-user"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
@@ -198,7 +198,7 @@
                     <h4>O nás</h4>
                     <ul>
                         <li><a href="#">Kontakt</a></li>
-                        <li><a href="#">Compliance</a></li> 
+                        <li><a href="#">Compliance</a></li>
                         <li><a href="#">Kariéra</a></li>
                     </ul>
                 </div>
