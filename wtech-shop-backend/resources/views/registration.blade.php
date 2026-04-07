@@ -29,7 +29,7 @@
             <input type="password" id="password" name="password" required><br><br>
 
             <button type="submit">Registrovať sa</button>
-            <a href="./login.html" class="back-link">Už máte účet? Prihláste sa</a>
+            <a href="/login" class="back-link">Už máte účet? Prihláste sa</a>
             </a>
         </form>
     </div>

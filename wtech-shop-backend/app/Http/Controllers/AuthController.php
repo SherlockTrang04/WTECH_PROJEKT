@@ -10,7 +10,7 @@ class AuthController extends Controller
 {
     public function showForm()
     {
-        return view('registration'); // points to resources/views/register.blade.php
+        return view('registration'); 
     }
 
     public function register(Request $request)
