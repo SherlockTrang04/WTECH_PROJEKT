@@ -48,4 +48,12 @@ class AuthController extends Controller
             'email' => 'Nespravny email alebo heslo.',
         ]);
     }
+
+    public function logout(Request $request) {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/login')->with('success', 'Odhlásenie prebehlo úspešne!');
+    }
 }

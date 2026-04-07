@@ -57,8 +57,12 @@
                             <i class="fa-solid fa-user"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="./login.html">Prihlásiť sa</a></li>
+                            <li><a class="dropdown-item" href="/login">Prihlásiť sa</a></li>
                             <li><a class="dropdown-item" href="/registration">Registrovať sa</a></li>
+                            <form method="POST" action="/logout">
+                                @csrf
+                                <button type="submit" class="dropdown-item border-0 bg-transparent">Odhlásiť sa</button>
+                            </form>
                         </ul>
                     </li>
                 </ul>
@@ -194,7 +198,7 @@
                     <h4>O nás</h4>
                     <ul>
                         <li><a href="#">Kontakt</a></li>
-                        <li><a href="#">Compliance</a></li> 
+                        <li><a href="#">Compliance</a></li>
                         <li><a href="#">Kariéra</a></li>
                     </ul>
                 </div>
