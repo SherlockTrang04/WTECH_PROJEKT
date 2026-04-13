@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
             $table->string('name');
+            $table->decimal('price', 8, 2)->default(0);
             $table->text('description');
             $table->tsvector('search_vector');
             $table->smallInteger('stars')->default(0)->nullable();
