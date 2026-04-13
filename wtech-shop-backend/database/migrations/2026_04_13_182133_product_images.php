@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('product_images', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_id');
-            $table->foreign('product_id')->references('id')->on('products')->nullOnDelete();
+            $table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
             $table->string('url');
             $table->smallInteger('sort_order')->default(0);
         });

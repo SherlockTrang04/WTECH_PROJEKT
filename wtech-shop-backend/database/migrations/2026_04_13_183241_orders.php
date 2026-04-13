@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedBigInteger('delivery_address_id');
-            $table->foreign('delivery_address_id')->references('id')->on('addresses')->cascadeOnDelete();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->nullOnDelete();
+            $table->unsignedBigInteger('delivery_address_id')->nullable();
+            $table->foreign('delivery_address_id')->references('id')->on('addresses')->nullOnDelete();
             $table->string('delivery_method');
             $table->string('payment_method');
             $table->string('status');
