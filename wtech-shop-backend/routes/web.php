@@ -2,17 +2,20 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
 
 Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/product', function () {
-    return view('product');
-});
-Route::get('/product_list', function () {
-    return view('product_list');
-});
+Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
+
+Route::get('/product_list', [ProductController::class, 'index']);
+
+//Route::get('/product_list', function () {
+//    return view('product_list');
+//});
 Route::get('/login', function () {
     return view('login');
 });
@@ -39,9 +42,10 @@ Route::get('/order-confirmation', function () {
     return view('index');
 });
 
-Route::get('/cart', function () {
-    return view('cart');
-});
+Route::get('/cart', [CartController::class, 'show']);
+Route::patch('/cart/{item}', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/cart/{item}', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
 
 Route::get('/rezervationstatus', function () {
     return view('index');
