@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('product_id')->references('id')->on('products');
             $table->unsignedInteger('quantity');
             $table->timestamp('created_at');
+            $table->timestamp('updated_at');
         });
     }
 
