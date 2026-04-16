@@ -3,14 +3,28 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
+<<<<<<< HEAD
+=======
+use App\Http\Controllers\CartController;
+>>>>>>> efa068c0ce0df8696bb8b69393a6fc818b3d515c
 
 Route::get('/', function () {
     return view('index');
 });
 
+<<<<<<< HEAD
 Route::resource('products', ProductController::class);
 Route::get('/product/{id}', [ProductController::class, 'show']);
 Route::get('/product_list', [ProductController::class, 'index']);
+=======
+Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
+
+Route::get('/product_list', [ProductController::class, 'index']);
+
+//Route::get('/product_list', function () {
+//    return view('product_list');
+//});
+>>>>>>> efa068c0ce0df8696bb8b69393a6fc818b3d515c
 Route::get('/login', function () {
     return view('login');
 });
@@ -37,9 +51,10 @@ Route::get('/order-confirmation', function () {
     return view('index');
 });
 
-Route::get('/cart', function () {
-    return view('cart');
-});
+Route::get('/cart', [CartController::class, 'show']);
+Route::patch('/cart/{item}', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/cart/{item}', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
 
 Route::get('/rezervationstatus', function () {
     return view('index');

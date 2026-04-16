@@ -22,8 +22,8 @@
         <div class="container-fluid">
 
             <!-- Logo -->
-            <a class="navbar-brand p-0" href="index.html">
-                <img src="./assets/logo.png" alt="logo" class="logo" />
+            <a class="navbar-brand p-0" href="/">
+                <img src="/assets/logo.png" alt="logo" class="logo" />
             </a>
 
             <!-- Mobile: toggler -->
@@ -49,7 +49,7 @@
                         </button>
                     </li>
                     <li class="nav-item">
-                        <a href="cart.html" class="nav-icon-btn" style="text-decoration:none;">
+                        <a href="/cart" class="nav-icon-btn" style="text-decoration:none;">
                             <i class="fa-solid fa-cart-arrow-down"></i>
                         </a>
                     </li>
@@ -59,7 +59,7 @@
                             <i class="fa-solid fa-user"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="./login.html">Prihlásiť sa</a></li>
+                            <li><a class="dropdown-item" href="/login">Prihlásiť sa</a></li>
                             <li><a class="dropdown-item" href="/registration">Registrovať sa</a></li>
                         </ul>
                     </li>
@@ -105,6 +105,7 @@
     <div class="content-area flex-grow-1">
         <div class="product-detail">
             <div class="product-gallery">
+<<<<<<< HEAD
                 <button class="gallery-btn prev-btn" id="prev-btn">&#8249;</button>
                 <img id="main-image" src="{{ $product->images->first()->url ?? 'https://placehold.co/400x400' }}" alt="product" class="gallery-img"/>
                 <button class="gallery-btn next-btn" id="next-btn">&#8250;</button>
@@ -120,25 +121,40 @@
                 <p class="product-info-label">{{ $product->name }}</p>
                 <p class="product-info-description">{{ $product->description }}</p>
                 <p class="product-price">€{{ number_format($product->price, 2) }}</p>
+=======
+                <button type="button" class="gallery-btn prev-btn">&#8249;</button>
+                <img id="galleryImg"
+                     src="{{ $product->images->first()?->url ?? asset('assets/placeholder.jpg') }}"
+                     alt="{{ $product->name }}" class="gallery-img"/>
+                <button type="button" class="gallery-btn next-btn">&#8250;</button>
+            </div>
 
+            <script>
+                const productImages = @json($product->images->pluck('url'));
+            </script>
+>>>>>>> efa068c0ce0df8696bb8b69393a6fc818b3d515c
+
+            <div class="product-info">
+                <p class="product-info-label">{{ strtoupper($product->brand) }}</p>
+                <h2>{{ $product->name }}</h2>
+                <p class="product-info-description">{{ $product->description }}</p>
+                <p class="product-price">€{{ number_format($product->price, 2) }}</p>
+
+                <form method="POST" action="{{ route('cart.add') }}">
+                    @csrf
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
                     <div class="product-quantity">
-                        <button class="qty-btn" onclick="changeQty(-1)">&#8722;</button>
-                        <input
-                                type="number"
-                                id="qty"
-                                value="1"
-                                min="1"
-                                max="99"
-                                class="qty-input"
-                                oninput="validateQty(this)"
-                        />
-                        <button class="qty-btn" onclick="changeQty(+1)">&#43;</button>
+                        <button type="button" class="qty-btn" onclick="changeQty(-1)">&#8722;</button>
+                        <input type="number" id="qty" name="quantity" value="1" min="1" max="99"
+                               class="qty-input" oninput="validateQty(this)"/>
+                        <button type="button" class="qty-btn" onclick="changeQty(+1)">&#43;</button>
                         <span class="qty-err" id="qty-err"></span>
                     </div>
+                    <button type="submit" class="add-to-cart-btn">Do košíka</button>
+                </form>
 
-                <button class="add-to-cart-btn" onclick="location.href='./cart.html'">Do košíka</button>
-                <!-- script na fungovanie tlacidiek + a - -->
                 <script>
+<<<<<<< HEAD
                     let currentImageIndex = 0;
                     const images = @json($product->images->pluck('url')->toArray());
 
@@ -162,65 +178,63 @@
                     });
 
                     function changeQty(qty) {
+=======
+                    function changeQty(delta) {
+>>>>>>> efa068c0ce0df8696bb8b69393a6fc818b3d515c
                         const input = document.getElementById('qty');
                         let current = parseInt(input.value) || 1;
-                        current += qty;
+                        current += delta;
                         if (current < 1) current = 1;
                         if (current > 99) current = 99;
                         input.value = current;
-                        document.getElementById("qty-err").textContent = '';
+                        document.getElementById('qty-err').textContent = '';
                     }
 
                     function validateQty(input) {
                         const error = document.getElementById('qty-err');
                         const value = input.value;
-
                         if (value === '' || isNaN(value)) {
                             error.textContent = 'Zadajte platné číslo';
                         } else if (parseInt(value) < 1) {
                             error.textContent = 'Množstvo musí byť aspoň 1';
                             input.value = 1;
                         } else if (parseInt(value) > 99) {
-                            error.textContent = 'Množstvo nemôže byť viac ako 99'
+                            error.textContent = 'Množstvo nemôže byť viac ako 99';
                             input.value = 99;
                         } else if (!Number.isInteger(parseFloat(value))) {
                             error.textContent = 'Zadajte celé číslo';
                             input.value = Math.floor(value);
+                        } else {
+                            error.textContent = '';
                         }
-                        error.textContent = '';
                     }
                 </script>
             </div>
         </div>
+
         <div class="product-params">
             <h2>Parametre:</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                ex
-                ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                deserunt
-                mollit anim id est laborum</p>
+            <ul>
+                <li><strong>Značka:</strong> {{ $product->brand }}</li>
+                <li><strong>Farba:</strong> {{ $product->color }}</li>
+                <li><strong>Hodnotenie:</strong> {{ $product->stars }} / 5</li>
+                <li><strong>Skladom:</strong> {{ $product->stock }} ks</li>
+            </ul>
         </div>
 
         <div class="similar-products">
             <h2>Podobné produkty:</h2>
             <div class="similar-row">
-                <div class="product">
-                    <img src="./assets/phones/phone-iphone.jpg" alt="produkt"/>
-                    <p>Lorem ipsum dolor sit amet</p>
-                    <span class="price">5€</span>
-                </div>
-                <div class="product">
-                    <img src="./assets/phones/motorola.jpg" alt="produkt"/>
-                    <p>Lorem ipsum dolor sit amet</p>
-                    <span class="price">5€</span>
-                </div>
-                <div class="product">
-                    <img src="./assets/phones/samsung.jpg" alt="produkt"/>
-                    <p>Lorem ipsum dolor sit amet</p>
-                    <span class="price">5€</span>
-                </div>
+                @foreach($similar as $item)
+                    <a href="{{ route('product.show', $item) }}" style="text-decoration:none;">
+                        <div class="product">
+                            <img src="{{ $item->images->first()?->url ?? asset('assets/placeholder.jpg') }}"
+                                 alt="{{ $item->name }}"/>
+                            <p>{{ $item->name }}</p>
+                            <span class="price">€{{ number_format($item->price, 2) }}</span>
+                        </div>
+                    </a>
+                @endforeach
             </div>
         </div>
     </div>
@@ -260,7 +274,21 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+    <script>
+        let imgIndex = 0;
+        const galleryImg = document.getElementById('galleryImg');
 
+        document.querySelector('.prev-btn').addEventListener('click', () => {
+            if (productImages.length === 0) return;
+            imgIndex = (imgIndex - 1 + productImages.length) % productImages.length;
+            galleryImg.src = productImages[imgIndex];
+        });
+
+        document.querySelector('.next-btn').addEventListener('click', () => {
+            if (productImages.length === 0) return;
+            imgIndex = (imgIndex + 1) % productImages.length;
+            galleryImg.src = productImages[imgIndex];
+        });
+    </script>
 </body>
 </html>

@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 
-    <link rel="stylesheet" href="bootstrap.min.css">  
+    <link rel="stylesheet" href="bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <title>Košík</title>
 </head>
@@ -16,7 +16,7 @@
         <div class="container-fluid">
 
             <!-- Logo -->
-            <a class="navbar-brand p-0" href="index.html">
+            <a class="navbar-brand p-0" href="/">
                 <img src="./assets/logo.png" alt="logo" class="logo" />
             </a>
 
@@ -43,7 +43,7 @@
                         </button>
                     </li>
                     <li class="nav-item">
-                        <a href="cart.html" class="nav-icon-btn" style="text-decoration:none;">
+                        <a href="/cart" class="nav-icon-btn" style="text-decoration:none;">
                             <i class="fa-solid fa-cart-arrow-down"></i>
                         </a>
                     </li>
@@ -53,7 +53,7 @@
                             <i class="fa-solid fa-user"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="./login.html">Prihlásiť sa</a></li>
+                            <li><a class="dropdown-item" href="/login">Prihlásiť sa</a></li>
                             <li><a class="dropdown-item" href="/registration">Registrovať sa</a></li>
                         </ul>
                     </li>
@@ -69,12 +69,8 @@
         <!-- Desktop Sidebar -->
         <aside class="desktop-sidebar sidebar d-none d-lg-block" style="width:200px; flex-shrink:0;">
             <ul class="categories">
-                <li><a href="#"><i class="fa-solid fa-star"></i> Novinky</a></li>
-                <li><a href="#"><i class="fa-solid fa-laptop"></i> Notebooky</a></li>
-                <li><a href="#"><i class="fa-solid fa-desktop"></i> Počítače</a></li>
-                <li><a href="#"><i class="fa-solid fa-mobile"></i> Smartfóny</a></li>
-                <li><a href="#"><i class="fa-solid fa-computer-mouse"></i> Príslušenstvá</a></li>
-                <li><a href="#"><i class="fa-solid fa-blender"></i> Spotrebiče</a></li>
+                <li><a href="/product_list"><i class="fa-solid fa-laptop"></i> Notebooky</a></li>
+                <li><a href="/product_list"><i class="fa-solid fa-mobile"></i> Smartfóny</a></li>
             </ul>
         </aside>
 
@@ -86,78 +82,57 @@
             </div>
             <div class="offcanvas-body">
                 <ul class="categories">
-                    <li><a href="#"><i class="fa-solid fa-star"></i> Novinky</a></li>
-                    <li><a href="#"><i class="fa-solid fa-laptop"></i> Notebooky</a></li>
-                    <li><a href="#"><i class="fa-solid fa-desktop"></i> Počítače</a></li>
-                    <li><a href="#"><i class="fa-solid fa-mobile"></i> Smartfóny</a></li>
-                    <li><a href="#"><i class="fa-solid fa-computer-mouse"></i> Príslušenstvá</a></li>
-                    <li><a href="#"><i class="fa-solid fa-blender"></i> Spotrebiče</a></li>
+                    <li><a href="/product_list"><i class="fa-solid fa-laptop"></i> Notebooky</a></li>
+                    <li><a href="/product_list"><i class="fa-solid fa-mobile"></i> Smartfóny</a></li>
                 </ul>
             </div>
         </div>
 
-    <div class="content-area flex-grow-1">
-        <h1 class="cart-title">Košík</h1>
-        <div class="cart-items">
-            <div class="cart-item">
-                <img src="./assets/fridge.jpg" alt="produkt" class="cart-item-img" />
-                <div class="cart-item-info">
-                    <p class="cart-item-name">Lorem ipsum dolor.</p>
-                    <p class="cart-item-price">51.59€</p>
-                    <p class="cart-item-stock">Na sklade</p>
-                    <div class="cart-item-quantity">
-                        <button class="qty-btn">&#8722;</button>
-                        <span class="qty-value">1</span>
-                        <button class="qty-btn">&#43;</button>
-                    </div>
+        <div class="content-area flex-grow-1">
+            <h1 class="cart-title">Košík</h1>
+
+            @if($items->isEmpty())
+                <p class="mt-4">Váš košík je prázdny.</p>
+            @else
+                <div class="cart-items">
+                    @foreach($items as $item)
+                        <div class="cart-item" data-price="{{ $item->product->price }}">
+                            <img src="{{ $item->product->images->first()?->url ?? asset('assets/placeholder.jpg') }}"
+                                 alt="{{ $item->product->name }}" class="cart-item-img" />
+                            <div class="cart-item-info">
+                                <p class="cart-item-name">{{ $item->product->name }}</p>
+                                <p class="cart-item-price">€{{ number_format($item->product->price, 2) }}</p>
+                                <p class="cart-item-stock">{{ $item->product->stock > 0 ? 'Na sklade' : 'Nedostupné' }}</p>
+
+                                {{-- Zmena množstva --}}
+                                <form method="POST" action="{{ route('cart.update', $item->id) }}" class="cart-item-quantity">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button type="button" class="qty-btn" onclick="changeItemQty(this, -1)">&#8722;</button>
+                                    <input type="number" name="quantity" value="{{ $item->quantity }}"
+                                           min="1" class="qty-value" oninput="updateTotal()" />
+                                    <button type="button" class="qty-btn" onclick="changeItemQty(this, 1)">&#43;</button>
+                                    <button type="submit" class="add-to-cart-btn" style="font-size:0.85rem;padding:6px 14px;">Uložiť</button>
+                                </form>
+
+                                {{-- Vymazať položku --}}
+                                <form method="POST" action="{{ route('cart.remove', $item->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="qty-btn" style="margin-top:8px;">&#10005;</button>
+                                </form>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
-            </div>
-            <div class="cart-item">
-                <img src="./assets/iphone.jpg" alt="produkt" class="cart-item-img" />
-                <div class="cart-item-info">
-                    <p class="cart-item-name">ed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit</p>
-                    <p class="cart-item-price">10.49€</p>
-                    <p class="cart-item-stock">Na sklade</p>
-                    <div class="cart-item-quantity">
-                        <button class="qty-btn">&#8722;</button>
-                        <span class="qty-value">1</span>
-                        <button class="qty-btn">&#43;</button>
-                    </div>
+
+                <div class="cart-footer">
+                    <p class="cart-total">Celkom: <span id="cartTotal">€{{ number_format($total, 2) }}</span></p>
+                    <a href="/shipping" class="checkout-btn">Prejsť na doručenie</a>
                 </div>
-            </div>
-            <div class="cart-item">
-                <img src="./assets/cable.jpg" alt="produkt" class="cart-item-img" />
-                <div class="cart-item-info">
-                    <p class="cart-item-name">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                    <p class="cart-item-price">5€</p>
-                    <p class="cart-item-stock">Na sklade</p>
-                    <div class="cart-item-quantity">
-                        <button class="qty-btn">&#8722;</button>
-                        <span class="qty-value">1</span>
-                        <button class="qty-btn">&#43;</button>
-                    </div>
-                </div>
-            </div>
-            <div class="cart-item">
-                <img src="./assets/airpods.jpg" alt="produkt" class="cart-item-img" />
-                <div class="cart-item-info">
-                    <p class="cart-item-name">"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat."</p>
-                    <p class="cart-item-price">50€</p>
-                    <p class="cart-item-stock">Na sklade</p>
-                    <div class="cart-item-quantity">
-                        <button class="qty-btn">&#8722;</button>
-                        <span class="qty-value">1</span>
-                        <button class="qty-btn">&#43;</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="cart-footer">
-            <p class="cart-total">Total: 100€</p>
-            <button class="checkout-btn" onclick="location.href='./shipping.html'">Prejsť na doručenie</button>
+            @endif
         </div>
     </div>
-</div>
     <!-- ── FOOTER ────────────────────────────────────────── -->
     <footer class="main-footer">
         <div class="container">
@@ -191,6 +166,26 @@
         </div>
     </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>    
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function changeItemQty(btn, delta) {
+        const input = btn.closest('form').querySelector('input[name="quantity"]');
+        let val = parseInt(input.value) || 1;
+        val += delta;
+        if (val < 1) val = 1;
+        input.value = val;
+        updateTotal();
+    }
+
+    function updateTotal() {
+        let total = 0;
+        document.querySelectorAll('.cart-item').forEach(item => {
+            const price = parseFloat(item.dataset.price) || 0;
+            const qty = parseInt(item.querySelector('input[name="quantity"]').value) || 1;
+            total += price * qty;
+        });
+        document.getElementById('cartTotal').textContent = '€' + total.toFixed(2);
+    }
+</script>
 </body>
 </html>

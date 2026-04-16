@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/order-confirmation.css') }}">
     <title>Elektroshop – Potvrdenie objednávky</title>
-    
+
 </head>
 <body>
 
@@ -17,12 +17,12 @@
 
     <nav class="navbar main-navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a class="navbar-brand p-0" href="index.html">
+            <a class="navbar-brand p-0" href="/">
                 <img src="./assets/logo.png" alt="logo" class="logo" />
             </a>
             <ul class="navbar-nav align-items-center gap-1 ms-auto">
                 <li class="nav-item">
-                    <a href="./cart.html" class="nav-icon-btn" style="text-decoration:none;">
+                    <a href="/cart" class="nav-icon-btn" style="text-decoration:none;">
                         <i class="fa-solid fa-cart-arrow-down"></i>
                     </a>
                 </li>
@@ -200,7 +200,7 @@
         </div>
     </div>
 
-        
+
 
 </body>
 </html>
