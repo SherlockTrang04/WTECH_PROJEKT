@@ -12,7 +12,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200..1000&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">   
     <title>Produkt</title>
 
 </head>
@@ -105,20 +105,21 @@
     <div class="content-area flex-grow-1">
         <div class="product-detail">
             <div class="product-gallery">
-                <button class="gallery-btn prev-btn">&#8249;</button>
-                <img src="./assets/phones/honor.jpg" alt="product" class="gallery-img"/>
-                <button class="gallery-btn next-btn">&#8250;</button>
+                <button class="gallery-btn prev-btn" id="prev-btn">&#8249;</button>
+                <img id="main-image" src="{{ $product->images->first()->url ?? 'https://placehold.co/400x400' }}" alt="product" class="gallery-img"/>
+                <button class="gallery-btn next-btn" id="next-btn">&#8250;</button>
+            </div>
+
+            <div class="product-thumbnails">
+                @foreach($product->images as $index => $image)
+                    <img src="{{ $image->url }}" alt="thumbnail" class="thumbnail {{ $index === 0 ? 'active' : '' }}" onclick="changeImage('{{ $image->url }}')">
+                @endforeach
             </div>
 
             <div class="product-info">
-                <p class="product-info-label">HONOR SMARTPHONE</p>
-                <p class="product-info-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                    eiusmod tempor incididunt ut
-                    labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
-                <p class="product-price">€199.99</p>
+                <p class="product-info-label">{{ $product->name }}</p>
+                <p class="product-info-description">{{ $product->description }}</p>
+                <p class="product-price">€{{ number_format($product->price, 2) }}</p>
 
                     <div class="product-quantity">
                         <button class="qty-btn" onclick="changeQty(-1)">&#8722;</button>
@@ -138,6 +139,28 @@
                 <button class="add-to-cart-btn" onclick="location.href='./cart.html'">Do košíka</button>
                 <!-- script na fungovanie tlacidiek + a - -->
                 <script>
+                    let currentImageIndex = 0;
+                    const images = @json($product->images->pluck('url')->toArray());
+
+                    function changeImage(url) {
+                        document.getElementById('main-image').src = url;
+                        currentImageIndex = images.indexOf(url);
+                        // Update active thumbnail
+                        document.querySelectorAll('.thumbnail').forEach((thumb, index) => {
+                            thumb.classList.toggle('active', index === currentImageIndex);
+                        });
+                    }
+
+                    document.getElementById('prev-btn').addEventListener('click', function() {
+                        currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                        changeImage(images[currentImageIndex]);
+                    });
+
+                    document.getElementById('next-btn').addEventListener('click', function() {
+                        currentImageIndex = (currentImageIndex + 1) % images.length;
+                        changeImage(images[currentImageIndex]);
+                    });
+
                     function changeQty(qty) {
                         const input = document.getElementById('qty');
                         let current = parseInt(input.value) || 1;

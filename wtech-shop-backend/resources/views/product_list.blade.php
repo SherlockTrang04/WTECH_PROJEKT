@@ -21,7 +21,7 @@
     <nav class="navbar main-navbar navbar-expand-lg">
         <div class="container-fluid">
 
-            <a class="navbar-brand p-0" href="index.html">
+            <a class="navbar-brand p-0" href="/">
                 <img src="./assets/logo.png" alt="logo" class="logo" />
             </a>
 
@@ -43,7 +43,7 @@
                         </button>
                     </li>
                     <li class="nav-item">
-                        <a href="./cart.html" class="nav-icon-btn" style="text-decoration:none;">
+                        <a href="/cart" class="nav-icon-btn" style="text-decoration:none;">
                             <i class="fa-solid fa-cart-arrow-down"></i>
                         </a>
                     </li>
@@ -53,7 +53,7 @@
                             <i class="fa-solid fa-user"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="./login.html">Prihlásiť sa</a></li>
+                            <li><a class="dropdown-item" href="/login">Prihlásiť sa</a></li>
                             <li><a class="dropdown-item" href="/registration">Registrovať sa</a></li>
                         </ul>
                     </li>
@@ -68,12 +68,12 @@
         <!-- Desktop Sidebar -->
         <aside class="sidebar d-none d-lg-block" style="width:200px; flex-shrink:0;">
             <ul class="categories">
-                <li><a href="#"><i class="fa-solid fa-star"></i> Novinky</a></li>
-                <li><a href="#"><i class="fa-solid fa-laptop"></i> Notebooky</a></li>
-                <li><a href="#"><i class="fa-solid fa-desktop"></i> Počítače</a></li>
-                <li><a href="#"><i class="fa-solid fa-mobile"></i> Smartfóny</a></li>
-                <li><a href="#"><i class="fa-solid fa-computer-mouse"></i> Príslušenstvá</a></li>
-                <li><a href="#"><i class="fa-solid fa-blender"></i> Spotrebiče</a></li>
+                <li><a href="/product_list"><i class="fa-solid fa-star"></i> Novinky</a></li>
+                <li><a href="/product_list"><i class="fa-solid fa-laptop"></i> Notebooky</a></li>
+                <li><a href="/product_list"><i class="fa-solid fa-desktop"></i> Počítače</a></li>
+                <li><a href="/product_list"><i class="fa-solid fa-mobile"></i> Smartfóny</a></li>
+                <li><a href="/product_list"><i class="fa-solid fa-computer-mouse"></i> Príslušenstvá</a></li>
+                <li><a href="/product_list"><i class="fa-solid fa-blender"></i> Spotrebiče</a></li>
             </ul>
         </aside>
 
@@ -85,12 +85,12 @@
             </div>
             <div class="offcanvas-body">
                 <ul class="categories">
-                    <li><a href="#"><i class="fa-solid fa-star"></i> Novinky</a></li>
-                    <li><a href="#"><i class="fa-solid fa-laptop"></i> Notebooky</a></li>
-                    <li><a href="#"><i class="fa-solid fa-desktop"></i> Počítače</a></li>
-                    <li><a href="#"><i class="fa-solid fa-mobile"></i> Smartfóny</a></li>
-                    <li><a href="#"><i class="fa-solid fa-computer-mouse"></i> Príslušenstvá</a></li>
-                    <li><a href="#"><i class="fa-solid fa-blender"></i> Spotrebiče</a></li>
+                    <li><a href="/product_list"><i class="fa-solid fa-star"></i> Novinky</a></li>
+                <li><a href="/product_list"><i class="fa-solid fa-laptop"></i> Notebooky</a></li>
+                <li><a href="/product_list"><i class="fa-solid fa-desktop"></i> Počítače</a></li>
+                <li><a href="/product_list"><i class="fa-solid fa-mobile"></i> Smartfóny</a></li>
+                <li><a href="/product_list"><i class="fa-solid fa-computer-mouse"></i> Príslušenstvá</a></li>
+                <li><a href="/product_list"><i class="fa-solid fa-blender"></i> Spotrebiče</a></li>
                 </ul>
             </div>
         </div>
@@ -183,96 +183,20 @@
 
             <!-- Product grid -->
             <div class="row g-4 mb-4">
+                @foreach($products as $product)
                 <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="product-card">
-                        <img src="./assets/phones/phone-iphone.jpg" alt="Produkt 1" />
-                        <div class="card-body">
-                            <h3>Produkt 1</h3>
-                            <p>Popis produktu 1</p>
-                            <span class="price">€199.99</span>
+                    <a href="{{ route('products.show', $product->id) }}" class="product-card-link">
+                        <div class="product-card">
+                            <img src="{{ $product->images->first()->url ?? 'https://placehold.co/300x300' }}" alt="{{ $product->name }}" />
+                            <div class="card-body">
+                                <h3>{{ $product->name }}</h3>
+                                <p>{{ Str::limit($product->description, 50) }}</p>
+                                <span class="price">€{{ number_format($product->price, 2) }}</span>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="product-card">
-                        <img src="./assets/phones/honor.jpg" alt="Produkt 2" />
-                        <div class="card-body">
-                            <h3>Produkt 2</h3>
-                            <p>Popis produktu 2</p>
-                            <span class="price">€199.99</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="product-card">
-                        <img src="./assets/phones/huawei.jpg" alt="Produkt 3" />
-                        <div class="card-body">
-                            <h3>Produkt 3</h3>
-                            <p>Popis produktu 3</p>
-                            <span class="price">€199.99</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="product-card">
-                        <img src="./assets/phones/motorola.jpg" alt="Produkt 4" />
-                        <div class="card-body">
-                            <h3>Produkt 4</h3>
-                            <p>Popis produktu 4</p>
-                            <span class="price">€199.99</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="product-card">
-                        <img src="./assets/phones/nexus.jpg" alt="Produkt 5" />
-                        <div class="card-body">
-                            <h3>Produkt 5</h3>
-                            <p>Popis produktu 5</p>
-                            <span class="price">€199.99</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="product-card">
-                        <img src="./assets/phones/oppo.jpg" alt="Produkt 6" />
-                        <div class="card-body">
-                            <h3>Produkt 6</h3>
-                            <p>Popis produktu 6</p>
-                            <span class="price">€199.99</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="product-card">
-                        <img src="./assets/phones/samsung.jpg" alt="Produkt 7" />
-                        <div class="card-body">
-                            <h3>Produkt 7</h3>
-                            <p>Popis produktu 7</p>
-                            <span class="price">€199.99</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="product-card">
-                        <img src="./assets/phones/sony.jpg" alt="Produkt 8" />
-                        <div class="card-body">
-                            <h3>Produkt 8</h3>
-                            <p>Popis produktu 8</p>
-                            <span class="price">€199.99</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="product-card">
-                        <img src="./assets/phones/xiaomi.jpg" alt="Produkt 9" />
-                        <div class="card-body">
-                            <h3>Produkt 9</h3>
-                            <p>Popis produktu 9</p>
-                            <span class="price">€199.99</span>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
 
             <!-- Pagination -->

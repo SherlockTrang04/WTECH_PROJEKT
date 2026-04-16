@@ -248,7 +248,12 @@
             margin-top: 10px;
             background-color: transparent;
         }
- 
+
+        .product-card-link {
+            text-decoration: none;
+            color: inherit;
+        }
+
         /* ── SECTION HEADING ─────────────────────────── */
         .section-heading {
             color: var(--text-light);
@@ -912,7 +917,34 @@
         .gallery-btn:hover {
             background-color: rgba(255,255,255,0.12);
         }
- 
+
+        /* Thumbnails */
+        .product-thumbnails {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            background-color: transparent;
+        }
+
+        .thumbnail {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.2s;
+            background-color: #f2f1f1;
+        }
+
+        .thumbnail:hover {
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        .thumbnail.active {
+            border-color: var(--text-light);
+        }
+
         /* Product info */
         .product-info {
             flex: 1;

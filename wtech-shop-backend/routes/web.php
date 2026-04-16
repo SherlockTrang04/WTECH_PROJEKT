@@ -2,17 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
 
 Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/product', function () {
-    return view('product');
-});
-Route::get('/product_list', function () {
-    return view('product_list');
-});
+Route::resource('products', ProductController::class);
+Route::get('/product/{id}', [ProductController::class, 'show']);
+Route::get('/product_list', [ProductController::class, 'index']);
 Route::get('/login', function () {
     return view('login');
 });

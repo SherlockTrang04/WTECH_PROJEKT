@@ -76,12 +76,12 @@
         <!-- Desktop Sidebar -->
         <aside class="desktop-sidebar sidebar d-none d-lg-block" style="width:200px; flex-shrink:0;">
             <ul class="categories">
-                <li><a href="./product_list.html"><i class="fa-solid fa-star"></i> Novinky</a></li>
-                <li><a href="./product_list.html"><i class="fa-solid fa-laptop"></i> Notebooky</a></li>
-                <li><a href="./product_list.html"><i class="fa-solid fa-desktop"></i> Počítače</a></li>
-                <li><a href="./product_list.html"><i class="fa-solid fa-mobile"></i> Smartfóny</a></li>
-                <li><a href="./product_list.html"><i class="fa-solid fa-computer-mouse"></i> Príslušenstvá</a></li>
-                <li><a href="./product_list.html"><i class="fa-solid fa-blender"></i> Spotrebiče</a></li>
+                <li><a href="./product_list"><i class="fa-solid fa-star"></i> Novinky</a></li>
+                <li><a href="./product_list"><i class="fa-solid fa-laptop"></i> Notebooky</a></li>
+                <li><a href="./product_list"><i class="fa-solid fa-desktop"></i> Počítače</a></li>
+                <li><a href="./product_list"><i class="fa-solid fa-mobile"></i> Smartfóny</a></li>
+                <li><a href="./product_list"><i class="fa-solid fa-computer-mouse"></i> Príslušenstvá</a></li>
+                <li><a href="./product_list"><i class="fa-solid fa-blender"></i> Spotrebiče</a></li>
             </ul>
         </aside>
 
@@ -93,12 +93,12 @@
             </div>
             <div class="offcanvas-body">
                 <ul class="categories">
-                    <li><a href="./product_list.html"><i class="fa-solid fa-star"></i> Novinky</a></li>
-                    <li><a href="./product_list.html"><i class="fa-solid fa-laptop"></i> Notebooky</a></li>
-                    <li><a href="./product_list.html"><i class="fa-solid fa-desktop"></i> Počítače</a></li>
-                    <li><a href="./product_list.html"><i class="fa-solid fa-mobile"></i> Smartfóny</a></li>
-                    <li><a href="./product_list.html"><i class="fa-solid fa-computer-mouse"></i> Príslušenstvá</a></li>
-                    <li><a href="./product_list.html"><i class="fa-solid fa-blender"></i> Spotrebiče</a></li>
+                    <li><a href="./product_list"><i class="fa-solid fa-star"></i> Novinky</a></li>
+                    <li><a href="./product_list"><i class="fa-solid fa-laptop"></i> Notebooky</a></li>
+                    <li><a href="./product_list"><i class="fa-solid fa-desktop"></i> Počítače</a></li>
+                    <li><a href="./product_list"><i class="fa-solid fa-mobile"></i> Smartfóny</a></li>
+                    <li><a href="./product_list"><i class="fa-solid fa-computer-mouse"></i> Príslušenstvá</a></li>
+                    <li><a href="./product_list"><i class="fa-solid fa-blender"></i> Spotrebiče</a></li>
                 </ul>
             </div>
         </div>
@@ -205,8 +205,8 @@
                 <div class="col-12 col-md-4">
                     <h4>Objednávky</h4>
                     <ul>
-                        <li><a href="./orderstatus.html">Stav objednávky</a></li>
-                        <li><a href="./rezervationstatus.html">Stav reklamácie</a></li>
+                        <li><a href="./orderstatus">Stav objednávky</a></li>
+                        <li><a href="./rezervationstatus">Stav reklamácie</a></li>
                         <li><a href="#">Ako začať</a></li>
                     </ul>
                 </div>
