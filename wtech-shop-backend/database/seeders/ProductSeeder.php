@@ -2,14 +2,10 @@
 
 namespace Database\Seeders;
 
-<<<<<<< HEAD
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
-=======
 use Illuminate\Database\Seeder;
 use App\Models\Product;
 use App\Models\Category;
->>>>>>> efa068c0ce0df8696bb8b69393a6fc818b3d515c
 
 class ProductSeeder extends Seeder
 {
@@ -18,9 +14,7 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-<<<<<<< HEAD
         //
-=======
         $smartfony = Category::where('name', 'Smartfóny')->first()->id;
         $notebooky = Category::where('name', 'Notebooky')->first()->id;
 
@@ -40,6 +34,5 @@ class ProductSeeder extends Seeder
         foreach ($products as $data) {
             Product::create(array_merge($data, ['is_active' => true]));
         }
->>>>>>> efa068c0ce0df8696bb8b69393a6fc818b3d515c
     }
 }

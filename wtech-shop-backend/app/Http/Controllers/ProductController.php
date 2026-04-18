@@ -2,26 +2,14 @@
 
 namespace App\Http\Controllers;
 
-<<<<<<< HEAD
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\Category;
 
+
 class ProductController extends Controller
 {
-    public function index()
-    {
-        $products = Product::with('images')->get();
-        return view('product_list', compact('products'));
-    }
-
-    public function show($id)
-    {
-        $product = Product::with('images')->findOrFail($id);
-        return view('product', compact('product'));
-    }
-
     public function store(Request $request)
     {
         $request->validate([
@@ -81,14 +69,6 @@ class ProductController extends Controller
         $product->delete();
         return response()->json(['success' => true]);
     }
-}
-=======
-use App\Models\Category;
-use App\Models\Product;
-use Illuminate\Http\Request;
-
-class ProductController extends Controller
-{
     public function index(Request $request)
     {
         $query = Product::where('is_active', true)->with('images');
@@ -144,4 +124,3 @@ class ProductController extends Controller
         return view('product', compact('product', 'similar'));
     }
 }
->>>>>>> efa068c0ce0df8696bb8b69393a6fc818b3d515c

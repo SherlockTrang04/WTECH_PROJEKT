@@ -57,13 +57,24 @@
                             <i class="fa-solid fa-user"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="./login">Prihlásiť sa</a></li>
-                            <li><a class="dropdown-item" href="./registration">Registrovať sa</a></li>
-                            <form method="POST" action="./logout">
-                                @csrf
-                                <button type="submit" class="dropdown-item border-0 bg-transparent">Odhlásiť sa</button>
-                            </form>
+                            @auth
+                                <li><a class="dropdown-item" href="/user_info">Môj účet</a></li>
+                                <li><a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        Odhlásiť sa
+                                    </a>
+                                </li>
+                            @endauth
+                            @guest
+                                <li><a class="dropdown-item" href="./login">Prihlásiť sa</a></li>
+                                <li><a class="dropdown-item" href="./registration">Registrovať sa</a></li>
+                            @endguest
                         </ul>
+                        @auth
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                        @endauth
                     </li>
                 </ul>
             </div>

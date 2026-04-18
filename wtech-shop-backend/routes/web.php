@@ -3,28 +3,21 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
-<<<<<<< HEAD
-=======
 use App\Http\Controllers\CartController;
->>>>>>> efa068c0ce0df8696bb8b69393a6fc818b3d515c
 
 Route::get('/', function () {
     return view('index');
 });
 
-<<<<<<< HEAD
 Route::resource('products', ProductController::class);
 Route::get('/product/{id}', [ProductController::class, 'show']);
 Route::get('/product_list', [ProductController::class, 'index']);
-=======
 Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
 
-Route::get('/product_list', [ProductController::class, 'index']);
 
 //Route::get('/product_list', function () {
 //    return view('product_list');
 //});
->>>>>>> efa068c0ce0df8696bb8b69393a6fc818b3d515c
 Route::get('/login', function () {
     return view('login');
 });
@@ -35,9 +28,13 @@ Route::post('/registration', [AuthController::class, 'register']);
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/user_info', function () {
-    return view('user_info');
+Route::middleware('auth')->group(function () {
+    Route::get('/user_info', function () {
+        return view('user_info');
+    });
+    Route::put('/user_info', [AuthController::class, 'updateUserInfo'])->name('user.update');
 });
+ 
 
 Route::get('/shipping', function () {
     return view('shipping');

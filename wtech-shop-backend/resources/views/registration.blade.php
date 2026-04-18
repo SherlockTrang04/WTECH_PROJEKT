@@ -28,6 +28,9 @@
             <label for="password">Heslo (minimalne 8 znakov):</label>
             <input type="password" id="password" name="password" required><br><br>
 
+            <label for="password">Heslo(Zadať ešte raz ):</label>
+            <input type="password" id="password" name="password" required><br><br>
+
             <button type="submit">Registrovať sa</button>
             <a href="/login" class="back-link">Už máte účet? Prihláste sa</a>
             </a>

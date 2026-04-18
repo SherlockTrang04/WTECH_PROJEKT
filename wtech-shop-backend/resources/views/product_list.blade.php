@@ -21,15 +21,9 @@
 <nav class="navbar main-navbar navbar-expand-lg">
     <div class="container-fluid">
 
-<<<<<<< HEAD
-            <a class="navbar-brand p-0" href="/">
-                <img src="./assets/logo.png" alt="logo" class="logo" />
-            </a>
-=======
         <a class="navbar-brand p-0" href="/">
             <img src="/assets/logo.png" alt="logo" class="logo"/>
         </a>
->>>>>>> efa068c0ce0df8696bb8b69393a6fc818b3d515c
 
         <button class="navbar-toggler ms-auto me-2" type="button"
                 data-bs-toggle="collapse" data-bs-target="#mainNavCollapse"
@@ -42,7 +36,6 @@
                 <input type="text" name="search" placeholder="Hľadať..." class="searchbar" value="{{ request('search') }}"/>
             </form>
 
-<<<<<<< HEAD
                 <ul class="navbar-nav align-items-center gap-1 ms-lg-3">
                     <li class="nav-item">
                         <button class="nav-icon-btn" aria-label="Hľadať">
@@ -60,9 +53,24 @@
                             <i class="fa-solid fa-user"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="/login">Prihlásiť sa</a></li>
-                            <li><a class="dropdown-item" href="/registration">Registrovať sa</a></li>
+                            @auth
+                                <li><a class="dropdown-item" href="/user_info">Môj účet</a></li>
+                                <li><a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        Odhlásiť sa
+                                    </a>
+                                </li>
+                            @endauth
+                            @guest
+                                <li><a class="dropdown-item" href="/login">Prihlásiť sa</a></li>
+                                <li><a class="dropdown-item" href="/registration">Registrovať sa</a></li>
+                            @endguest
                         </ul>
+                        @auth
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                        @endauth
                     </li>
                 </ul>
             </div>
@@ -75,7 +83,7 @@
         <!-- Desktop Sidebar -->
         <aside class="sidebar d-none d-lg-block" style="width:200px; flex-shrink:0;">
             <ul class="categories">
-                <li><a href="/product_list"><i class="fa-solid fa-star"></i> Novinky</a></li>
+                <li><a href="/products"><i class="fa-solid fa-star"></i> Novinky</a></li>
                 <li><a href="/product_list"><i class="fa-solid fa-laptop"></i> Notebooky</a></li>
                 <li><a href="/product_list"><i class="fa-solid fa-desktop"></i> Počítače</a></li>
                 <li><a href="/product_list"><i class="fa-solid fa-mobile"></i> Smartfóny</a></li>
@@ -100,79 +108,6 @@
                 <li><a href="/product_list"><i class="fa-solid fa-blender"></i> Spotrebiče</a></li>
                 </ul>
             </div>
-=======
-            <ul class="navbar-nav align-items-center gap-1 ms-lg-3">
-                <li class="nav-item">
-                    <button class="nav-icon-btn" aria-label="Hľadať">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <a href="./cart" class="nav-icon-btn" style="text-decoration:none;">
-                        <i class="fa-solid fa-cart-arrow-down"></i>
-                    </a>
-                </li>
-                <li class="nav-item dropdown">
-                    <button class="nav-icon-btn dropdown-toggle" data-bs-toggle="dropdown"
-                            aria-expanded="false" style="background:transparent;border:none;">
-                        <i class="fa-solid fa-user"></i>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="/login">Prihlásiť sa</a></li>
-                        <li><a class="dropdown-item" href="/registration">Registrovať sa</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-<!-- ── MAIN LAYOUT ──────────────────────────────────── -->
-<div class="d-flex flex-lg-row flex-column" style="flex:1;">
-
-    <!-- Desktop Sidebar -->
-    @php
-        $categoryIcons = [
-            'Smartfóny'      => 'fa-mobile',
-            'Notebooky'      => 'fa-laptop',
-            'Počítače'       => 'fa-desktop',
-            'Príslušenstvo'  => 'fa-computer-mouse',
-            'Spotrebiče'     => 'fa-blender',
-        ];
-    @endphp
-    <aside class="sidebar d-none d-lg-block" style="width:200px; flex-shrink:0;">
-        <ul class="categories">
-            @foreach($categories as $cat)
-                <li>
-                    <a href="/product_list?category_id={{ $cat->id }}"
-                       class="{{ request('category_id')==$cat->id ? 'active' : '' }}">
-                        <i class="fa-solid {{ $categoryIcons[$cat->name] ?? 'fa-tag' }}"></i>
-                        {{ $cat->name }}
-                    </a>
-                </li>
-            @endforeach
-        </ul>
-    </aside>
-
-    <!-- Mobile Offcanvas Sidebar -->
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileSidebar">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title">Kategórie</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
-        </div>
-        <div class="offcanvas-body">
-            <ul class="categories">
-                @foreach($categories as $cat)
-                    <li>
-                        <a href="/product_list?category_id={{ $cat->id }}"
-                           class="{{ request('category_id')==$cat->id ? 'active' : '' }}">
-                            <i class="fa-solid {{ $categoryIcons[$cat->name] ?? 'fa-tag' }}"></i>
-                            {{ $cat->name }}
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
->>>>>>> efa068c0ce0df8696bb8b69393a6fc818b3d515c
         </div>
     </div>
 
@@ -261,7 +196,6 @@
                         Hodnotenie <span id="ratingBadge" class="active-badge" style="display:none"></span>
                     </button>
 
-<<<<<<< HEAD
                 <div class="rating-dropdown" id="ratingDropdown">
                     <p class="rating-hint">Zobraziť produkty s hodnotením:</p>
                     <div class="rating-options" id="ratingOptions"></div>
@@ -288,7 +222,6 @@
                             </div>
                         </div>
                     </a>
-=======
                     <div class="rating-dropdown" id="ratingDropdown">
                         <p class="rating-hint">Zobraziť produkty s hodnotením:</p>
                         <div class="rating-options" id="ratingOptions"></div>
@@ -298,7 +231,6 @@
                             <button type="button" class="btn-apply" id="btnRatingApply">Použiť filter</button>
                         </div>
                     </div>
->>>>>>> efa068c0ce0df8696bb8b69393a6fc818b3d515c
                 </div>
                 @endforeach
             </div>
@@ -311,7 +243,7 @@
                 <option value="newest"     {{ request('sort', 'newest') == 'newest'     ? 'selected' : '' }}>Najnovšie</option>
                 <option value="price_asc"  {{ request('sort') == 'price_asc'            ? 'selected' : '' }}>Cena: od najnižšej</option>
                 <option value="price_desc" {{ request('sort') == 'price_desc'           ? 'selected' : '' }}>Cena: od najvyššej</option>
-{{--                <option value="stars_desc" {{ request('sort') == 'stars_desc'           ? 'selected' : '' }}>Hodnotenie</option>--}}
+{{--                <option value="stars_desc" {{ request('sort') == 'stars_desc'       ? 'selected' : '' }}>Hodnotenie</option>--}}
             </select>
         </div>
 

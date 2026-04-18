@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200..1000&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/user-info.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/user_info.css') }}">
     <title>Moje údaje</title>
 </head>
 <body>
@@ -15,7 +15,7 @@
     <!-- ── NAVBAR ── -->
     <nav class="navbar main-navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a class="navbar-brand p-0" href="index.html">
+            <a class="navbar-brand p-0" href="/">
                 <img src="./assets/logo.png" alt="logo" class="logo" />
             </a>
             <button class="navbar-toggler ms-auto me-2" type="button"
@@ -42,24 +42,45 @@
                             <i class="fa-solid fa-user"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="./login.html">Prihlásiť sa</a></li>
-                            <li><a class="dropdown-item" href="/registration">Registrovať sa</a></li>
+                            @auth
+                                <li><a class="dropdown-item" href="/user_info">Môj účet</a></li>
+                                <li><a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        Odhlásiť sa
+                                    </a>
+                                </li>
+                            @endauth
+                            @guest
+                                <li><a class="dropdown-item" href="./login">Prihlásiť sa</a></li>
+                                <li><a class="dropdown-item" href="/registration">Registrovať sa</a></li>
+                            @endguest
                         </ul>
+                        @auth
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                        @endauth
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
+    @php
+        $user      = auth()->user();
+        $nameParts = explode(' ', $user->name);
+        $initials  = collect($nameParts)->map(fn($w) => strtoupper(substr($w, 0, 1)))->implode('');
+    @endphp
+
     <div class="page-body">
 
         <!-- ── PROFILE SIDEBAR ── -->
         <aside class="profile-sidebar">
             <div class="sidebar-avatar">
-                <div class="avatar-circle">JH</div>
+                <div class="avatar-circle">{{ $initials }}</div>
                 <div>
-                    <div class="avatar-name">Jan Holly</div>
-                    <div class="avatar-email">abc@gmail.com</div>
+                    <div class="avatar-name">{{ $user->name }}</div>
+                    <div class="avatar-email">{{ $user->email }}</div>
                 </div>
             </div>
 
@@ -75,7 +96,7 @@
 
                 <div class="sidebar-divider"></div>
 
-                <button class="sidebar-nav-item" onclick="alert('Odhlásenie...')">
+                <button class="sidebar-nav-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <i class="fa-solid fa-right-from-bracket"></i>
                     Odhlásiť sa
                 </button>
@@ -84,6 +105,24 @@
 
         <!-- ── MAIN CONTENT ── -->
         <main class="profile-content">
+
+            @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show mx-3 mt-3" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
+
+            @if($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show mx-3 mt-3" role="alert">
+                    <ul class="mb-0">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
 
             <!-- SECTION: Profile / Moje údaje -->
             <div id="section-profile" class="profile-section active">
@@ -98,31 +137,37 @@
                         <div class="info-card-title">Osobné údaje</div>
                         <div class="info-row">
                             <span class="info-label">Meno a priezvisko</span>
-                            <span class="info-value">Jan Holly</span>
+                            <span class="info-value">{{ $user->name }}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Používateľské meno</span>
+                            <span class="info-value">{{ $user->username }}</span>
                         </div>
                         <div class="info-row">
                             <span class="info-label">Email</span>
-                            <span class="info-value">abc@gmail.com</span>
+                            <span class="info-value">{{ $user->email }}</span>
                         </div>
                         <div class="info-row">
                             <span class="info-label">Telefón</span>
-                            <span class="info-value">+421 123 456 789</span>
+                            <span class="info-value">{{ $user->phone ?? '—' }}</span>
                         </div>
                     </div>
 
                     <div class="info-card">
                         <div class="info-card-title">Doručovacia adresa</div>
                         <div class="info-row">
-                            <span class="info-label">Ulica</span>
-                            <span class="info-value">Haha ulica 19</span>
+                            <span class="info-label">Ulica a číslo</span>
+                            <span class="info-value">
+                                {{ trim(($user->address_street ?? '') . ' ' . ($user->address_house_number ?? '')) ?: '—' }}
+                            </span>
                         </div>
                         <div class="info-row">
                             <span class="info-label">PSČ</span>
-                            <span class="info-value">821 08</span>
+                            <span class="info-value">{{ $user->address_zip ?? '—' }}</span>
                         </div>
                         <div class="info-row">
                             <span class="info-label">Mesto</span>
-                            <span class="info-value">Bratislava</span>
+                            <span class="info-value">{{ $user->address_city ?? '—' }}</span>
                         </div>
                     </div>
 
@@ -134,54 +179,59 @@
 
                 <!-- Edit mode -->
                 <div id="edit-mode" style="display:none;">
-                    <div class="info-card">
-                        <div class="info-card-title">Osobné údaje</div>
-                        <div class="form-grid" style="margin-top:4px;">
-                            <div class="form-group">
-                                <label>MENO</label>
-                                <input type="text" value="Jan" />
-                            </div>
-                            <div class="form-group">
-                                <label>PRIEZVISKO</label>
-                                <input type="text" value="Holly" />
-                            </div>
-                            <div class="form-group full">
-                                <label>EMAIL</label>
-                                <input type="email" value="abc@gmail.com" />
-                            </div>
-                            <div class="form-group full">
-                                <label>TELEFÓN</label>
-                                <input type="tel" value="+421 123 456 789" />
+                    <form action="{{ route('user.update') }}" method="POST">
+                        @csrf
+                        @method('PUT')
+
+                        <div class="info-card">
+                            <div class="info-card-title">Osobné údaje</div>
+                            <div class="form-grid" style="margin-top:4px;">
+                                <div class="form-group full">
+                                    <label>MENO A PRIEZVISKO</label>
+                                    <input type="text" name="name" value="{{ old('name', $user->name) }}" />
+                                </div>
+                                <div class="form-group full">
+                                    <label>POUŽÍVATEĽSKÉ MENO</label>
+                                    <input type="text" name="username" value="{{ old('username', $user->username) }}" />
+                                </div>
+                                <div class="form-group full">
+                                    <label>EMAIL</label>
+                                    <input type="email" name="email" value="{{ old('email', $user->email) }}" />
+                                </div>
+                                <div class="form-group full">
+                                    <label>TELEFÓN</label>
+                                    <input type="tel" name="phone" value="{{ old('phone', $user->phone ?? '') }}" />
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="info-card">
-                        <div class="info-card-title">Doručovacia adresa</div>
-                        <div class="form-grid" style="margin-top:4px;">
-                            <div class="form-group">
-                                <label>ULICA</label>
-                                <input type="text" value="Haha ulica" />
-                            </div>
-                            <div class="form-group">
-                                <label>ČÍSLO</label>
-                                <input type="text" value="19" />
-                            </div>
-                            <div class="form-group">
-                                <label>PSČ</label>
-                                <input type="text" value="821 08" />
-                            </div>
-                            <div class="form-group">
-                                <label>MESTO</label>
-                                <input type="text" value="Bratislava" />
+                        <div class="info-card">
+                            <div class="info-card-title">Doručovacia adresa</div>
+                            <div class="form-grid" style="margin-top:4px;">
+                                <div class="form-group">
+                                    <label>ULICA</label>
+                                    <input type="text" name="address_street" value="{{ old('address_street', $user->address_street ?? '') }}" />
+                                </div>
+                                <div class="form-group">
+                                    <label>ČÍSLO</label>
+                                    <input type="text" name="address_house_number" value="{{ old('address_house_number', $user->address_house_number ?? '') }}" />
+                                </div>
+                                <div class="form-group">
+                                    <label>PSČ</label>
+                                    <input type="text" name="address_zip" value="{{ old('address_zip', $user->address_zip ?? '') }}" />
+                                </div>
+                                <div class="form-group">
+                                    <label>MESTO</label>
+                                    <input type="text" name="address_city" value="{{ old('address_city', $user->address_city ?? '') }}" />
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="form-actions">
-                        <button class="btn-save" onclick="toggleEdit()">Uložiť zmeny</button>
-                        <button class="btn-cancel" onclick="toggleEdit()">Zrušiť</button>
-                    </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn-save">Uložiť zmeny</button>
+                            <button type="button" class="btn-cancel" onclick="toggleEdit()">Zrušiť</button>
+                        </div>
+                    </form>
                 </div>
             </div>
 
@@ -328,14 +378,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function switchSection(sectionId, btn) {
-            // Hide all sections
             document.querySelectorAll('.profile-section').forEach(s => s.classList.remove('active'));
-            // Deactivate all nav items
             document.querySelectorAll('.sidebar-nav-item').forEach(b => b.classList.remove('active'));
-
-            // Show target section
             document.getElementById('section-' + sectionId).classList.add('active');
-            // Activate clicked button
             btn.classList.add('active');
         }
 
@@ -352,6 +397,11 @@
                 editMode.style.display = 'block';
             }
         }
+
+        // Re-open edit mode if there were validation errors
+        @if($errors->any())
+            document.addEventListener('DOMContentLoaded', () => toggleEdit());
+        @endif
     </script>
 </body>
 </html>
