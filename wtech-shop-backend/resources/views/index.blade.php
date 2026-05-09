@@ -53,7 +53,7 @@
                     </li>
                     <li class="nav-item dropdown">
                         <button class="nav-icon-btn dropdown-toggle" data-bs-toggle="dropdown"
-                                aria-expanded="false" style="background:transparent;border:none;" href="./user_info.html">
+                                aria-expanded="false" style="background:transparent;border:none;" href="./user_info">
                             <i class="fa-solid fa-user"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
