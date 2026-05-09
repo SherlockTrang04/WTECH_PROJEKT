@@ -22,8 +22,9 @@ class CartController extends Controller
 
         $items = $cart ? $cart->items : collect();
         $total = $items->sum(fn($item) => $item->product->price * $item->quantity);
+        $categories = \App\Models\Category::all();
 
-        return view('cart', compact('items', 'total'));
+        return view('cart', compact('items', 'total', 'categories'));
     }
 
     public function update(Request $request, $itemId)

@@ -32,16 +32,15 @@
         </button>
 
         <div class="collapse navbar-collapse" id="mainNavCollapse">
-            <form method="GET" action="/product_list" class="mx-auto my-2 my-lg-0" style="width:100%;max-width:500px;">
+            <form method="GET" action="/product_list" class="mx-auto my-2 my-lg-0 d-flex" style="width:100%;max-width:500px;">
                 <input type="text" name="search" placeholder="Hľadať..." class="searchbar" value="{{ request('search') }}"/>
+                <button type="submit" class="nav-icon-btn" aria-label="Hľadať">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
             </form>
 
                 <ul class="navbar-nav align-items-center gap-1 ms-lg-3">
                     <li class="nav-item">
-                        <button class="nav-icon-btn" aria-label="Hľadať">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </button>
-                    </li>
                     <li class="nav-item">
                         <a href="/cart" class="nav-icon-btn" style="text-decoration:none;">
                             <i class="fa-solid fa-cart-arrow-down"></i>
@@ -80,15 +79,28 @@
     <!-- ── MAIN LAYOUT ──────────────────────────────────── -->
     <div class="d-flex flex-lg-row flex-column" style="flex:1;">
 
+        @php
+            $icons = [
+                'Notebooky'      => 'fa-laptop',
+                'Počítače'       => 'fa-desktop',
+                'Smartfóny'      => 'fa-mobile',
+                'Príslušenstvo'  => 'fa-computer-mouse',
+                'Spotrebiče'     => 'fa-blender',
+            ];
+        @endphp
+
         <!-- Desktop Sidebar -->
         <aside class="sidebar d-none d-lg-block" style="width:200px; flex-shrink:0;">
             <ul class="categories">
-                <li><a href="/products"><i class="fa-solid fa-star"></i> Novinky</a></li>
-                <li><a href="/product_list"><i class="fa-solid fa-laptop"></i> Notebooky</a></li>
-                <li><a href="/product_list"><i class="fa-solid fa-desktop"></i> Počítače</a></li>
-                <li><a href="/product_list"><i class="fa-solid fa-mobile"></i> Smartfóny</a></li>
-                <li><a href="/product_list"><i class="fa-solid fa-computer-mouse"></i> Príslušenstvá</a></li>
-                <li><a href="/product_list"><i class="fa-solid fa-blender"></i> Spotrebiče</a></li>
+                @foreach($categories as $category)
+                    @php $icon = $icons[$category->name] ?? 'fa-tag'; @endphp
+                    <li>
+                        <a href="/product_list?category_id={{ $category->id }}"
+                           class="{{ request('category_id') == $category->id ? 'active' : '' }}">
+                            <i class="fa-solid {{ $icon }}"></i> {{ $category->name }}
+                        </a>
+                    </li>
+                @endforeach
             </ul>
         </aside>
 
@@ -100,16 +112,18 @@
             </div>
             <div class="offcanvas-body">
                 <ul class="categories">
-                    <li><a href="/product_list"><i class="fa-solid fa-star"></i> Novinky</a></li>
-                <li><a href="/product_list"><i class="fa-solid fa-laptop"></i> Notebooky</a></li>
-                <li><a href="/product_list"><i class="fa-solid fa-desktop"></i> Počítače</a></li>
-                <li><a href="/product_list"><i class="fa-solid fa-mobile"></i> Smartfóny</a></li>
-                <li><a href="/product_list"><i class="fa-solid fa-computer-mouse"></i> Príslušenstvá</a></li>
-                <li><a href="/product_list"><i class="fa-solid fa-blender"></i> Spotrebiče</a></li>
+                    @foreach($categories as $category)
+                        @php $icon = $icons[$category->name] ?? 'fa-tag'; @endphp
+                        <li>
+                            <a href="/product_list?category_id={{ $category->id }}"
+                               class="{{ request('category_id') == $category->id ? 'active' : '' }}">
+                                <i class="fa-solid {{ $icon }}"></i> {{ $category->name }}
+                            </a>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
         </div>
-    </div>
 
     <!-- Content -->
     <main class="content-area flex-grow-1">
@@ -206,46 +220,14 @@
                     </div>
                 </div>
                 </div>
-            </div>
 
-            <!-- Product grid -->
-            <div class="row g-4 mb-4">
-                @foreach($products as $product)
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <a href="{{ route('products.show', $product->id) }}" class="product-card-link">
-                        <div class="product-card">
-                            <img src="{{ $product->images->first()->url ?? 'https://placehold.co/300x300' }}" alt="{{ $product->name }}" />
-                            <div class="card-body">
-                                <h3>{{ $product->name }}</h3>
-                                <p>{{ Str::limit($product->description, 50) }}</p>
-                                <span class="price">€{{ number_format($product->price, 2) }}</span>
-                            </div>
-                        </div>
-                    </a>
-                    <div class="rating-dropdown" id="ratingDropdown">
-                        <p class="rating-hint">Zobraziť produkty s hodnotením:</p>
-                        <div class="rating-options" id="ratingOptions"></div>
-                        <hr class="dropdown-divider">
-                        <div class="dropdown-actions">
-                            <button type="button" class="btn-reset" id="btnRatingReset">Resetovať</button>
-                            <button type="button" class="btn-apply" id="btnRatingApply">Použiť filter</button>
-                        </div>
-                    </div>
-                </div>
-                @endforeach
+                <select name="sort" onchange="document.getElementById('filterForm').submit()"
+                        class="form-select" style="width:auto; margin-left:auto;">
+                    <option value="newest"     {{ request('sort', 'newest') == 'newest'     ? 'selected' : '' }}>Najnovšie</option>
+                    <option value="price_asc"  {{ request('sort') == 'price_asc'            ? 'selected' : '' }}>Cena: od najnižšej</option>
+                    <option value="price_desc" {{ request('sort') == 'price_desc'           ? 'selected' : '' }}>Cena: od najvyššej</option>
+                </select>
             </div>
-        </form>
-
-        <!-- Sort -->
-        <div class="d-flex justify-content-end mb-3 mt-2">
-            <select name="sort" form="filterForm" onchange="document.getElementById('filterForm').submit()"
-                    class="form-select" style="width:auto;">
-                <option value="newest"     {{ request('sort', 'newest') == 'newest'     ? 'selected' : '' }}>Najnovšie</option>
-                <option value="price_asc"  {{ request('sort') == 'price_asc'            ? 'selected' : '' }}>Cena: od najnižšej</option>
-                <option value="price_desc" {{ request('sort') == 'price_desc'           ? 'selected' : '' }}>Cena: od najvyššej</option>
-{{--                <option value="stars_desc" {{ request('sort') == 'stars_desc'       ? 'selected' : '' }}>Hodnotenie</option>--}}
-            </select>
-        </div>
 
         <!-- Product grid -->
         <div class="row g-4 mb-4">
@@ -271,10 +253,31 @@
         </div>
 
         <!-- Pagination -->
+        @if($products->hasPages())
         <div class="paging">
-            {{ $products->links() }}
-        </div>
+            <ul class="pagination">
+                @if($products->onFirstPage())
+                    <li class="page-item disabled"><span class="page-link">&#8249;</span></li>
+                @else
+                    <li class="page-item"><a class="page-link" href="{{ $products->previousPageUrl() }}">&#8249;</a></li>
+                @endif
 
+                @foreach($products->getUrlRange(1, $products->lastPage()) as $page => $url)
+                    <li class="page-item {{ $page == $products->currentPage() ? 'active' : '' }}">
+                        <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                    </li>
+                @endforeach
+
+                @if($products->hasMorePages())
+                    <li class="page-item"><a class="page-link" href="{{ $products->nextPageUrl() }}">&#8250;</a></li>
+                @else
+                    <li class="page-item disabled"><span class="page-link">&#8250;</span></li>
+                @endif
+            </ul>
+        </div>
+        @endif
+
+        </form>
     </main>
 </div>
 
@@ -398,16 +401,7 @@
 
     updateUI(0, MAX_VAL);
 
-    const brands = [
-        {name: "Apple", count: 12},
-        {name: "Samsung", count: 18},
-        {name: "Huawei", count: 9},
-        {name: "Xiaomi", count: 14},
-        {name: "Honor", count: 7},
-        {name: "Sony", count: 5},
-        {name: "Motorola", count: 8},
-        {name: "OPPO", count: 6},
-    ];
+    const brands = @json($brands->map(fn($b) => ['name' => $b->brand, 'count' => $b->count]));
 
     let selectedBrands = new Set();
     let brandQuery = '';

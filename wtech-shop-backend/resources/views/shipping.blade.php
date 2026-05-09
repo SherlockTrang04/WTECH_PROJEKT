@@ -32,6 +32,18 @@
             <p>Vyberte si spôsob doručenia a platby za vašu objednávku.</p>
         </div>
 
+        @if($errors->any())
+            <div class="alert alert-danger mx-auto mb-3" style="max-width:900px;">
+                <ul class="mb-0">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <form method="POST" action="{{ route('order.store') }}" id="orderForm">
+        @csrf
         <div class="summary-grid">
 
             <div style="display:flex;flex-direction:column;gap:20px;background-color:transparent;">
@@ -41,12 +53,12 @@
                     <div class="shipping-options" id="shippingOptions">
 
                         <label class="ship-option selected" data-price="3.99">
-                            <input type="radio" name="shipping" value="kurier">
+                            <input type="radio" name="delivery_method" value="kurier" checked>
                             <div class="radio-dot"></div>
                             <div class="ship-icon"><i class="fa-solid fa-truck-fast"></i></div>
                             <div class="ship-info">
-                            <div class="ship-name">Kuriér</div>
-                            <div class="ship-desc">Doručenie priamo na vašu adresu</div>
+                                <div class="ship-name">Kuriér</div>
+                                <div class="ship-desc">Doručenie priamo na vašu adresu</div>
                             </div>
                             <div class="ship-right">
                                 <span class="ship-price">€3.99</span>
@@ -55,7 +67,7 @@
                         </label>
 
                         <label class="ship-option" data-price="2.49">
-                            <input type="radio" name="shipping" value="zasielkovna">
+                            <input type="radio" name="delivery_method" value="zasielkovna">
                             <div class="radio-dot"></div>
                             <div class="ship-icon"><i class="fa-solid fa-store"></i></div>
                             <div class="ship-info">
@@ -69,7 +81,7 @@
                         </label>
 
                         <label class="ship-option" data-price="0">
-                            <input type="radio" name="shipping" value="osobny">
+                            <input type="radio" name="delivery_method" value="osobny">
                             <div class="radio-dot"></div>
                             <div class="ship-icon"><i class="fa-solid fa-shop"></i></div>
                             <div class="ship-info">
@@ -83,65 +95,49 @@
                         </label>
                     </div>
                 </div>
+
                 <div class="panel" id="billing-panel">
                     <p class="panel-title">2. Fakturačné údaje</p>
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Meno" required>
+                            <input type="text" name="first_name" class="form-control @error('first_name') is-invalid @enderror"
+                                   placeholder="Meno" value="{{ old('first_name') }}" required>
+                            @error('first_name')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Priezvisko" required>
+                            <input type="text" name="last_name" class="form-control @error('last_name') is-invalid @enderror"
+                                   placeholder="Priezvisko" value="{{ old('last_name') }}" required>
+                            @error('last_name')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" placeholder="Ulica a číslo domu" required>
+                            <input type="text" name="street" class="form-control @error('street') is-invalid @enderror"
+                                   placeholder="Ulica a číslo domu" value="{{ old('street') }}" required>
+                            @error('street')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-md-4">
-                            <input type="text" class="form-control" placeholder="Mesto" required>
+                            <input type="text" name="city" class="form-control @error('city') is-invalid @enderror"
+                                   placeholder="Mesto" value="{{ old('city') }}" required>
+                            @error('city')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-md-4">
-                            <input type="text" class="form-control" placeholder="PSČ" required>
+                            <input type="text" name="zip" class="form-control @error('zip') is-invalid @enderror"
+                                   placeholder="PSČ" value="{{ old('zip') }}" required>
+                            @error('zip')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-md-8">
-                            <input type="email" class="form-control" placeholder="E-mail (pre zaslanie faktúry)" required>
-                        </div>
-                    </div>
-
-                    <div class="form-check mt-4">
-                        <input class="form-check-input" type="checkbox" id="differentDelivery" onchange="toggleDeliveryAddress()">
-                        <label class="form-check-label" for="differentDelivery" style="font-size: 0.9rem; cursor: pointer; font-weight: 600;">
-                            Doručiť na inú adresu ako fakturačnú
-                        </label>
-                    </div>
-                </div>
-
-                <div class="panel" id="delivery-panel">
-                    <p class="panel-title">Dodacia adresa</p>
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Meno príjemcu">
-                        </div>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Priezvisko príjemcu">
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" placeholder="Ulica a číslo">
-                        </div>
-                        <div class="col-md-4">
-                            <input type="text" class="form-control" placeholder="Mesto">
-                        </div>
-                        <div class="col-md-4">
-                            <input type="text" class="form-control" placeholder="PSČ">
+                            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
+                                   placeholder="E-mail (pre zaslanie faktúry)" value="{{ old('email', auth()->user()?->email) }}" required>
+                            @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                     </div>
                 </div>
-                
 
                 <div class="panel">
                     <p class="panel-title">3. Spôsob platby</p>
                     <div class="shipping-options" id="paymentOptions">
-                        
+
                         <label class="ship-option">
-                            <input type="radio" name="payment" value="card-online" onchange="handlePaymentSelection(this)">
+                            <input type="radio" name="payment_method" value="card-online" onchange="handlePaymentSelection(this)">
                             <div class="radio-dot"></div>
                             <div class="ship-icon"><i class="fa-solid fa-credit-card"></i></div>
                             <div class="ship-info">
@@ -159,7 +155,7 @@
                         </div>
 
                         <label class="ship-option">
-                            <input type="radio" name="payment" value="cod" onchange="handlePaymentSelection(this)">
+                            <input type="radio" name="payment_method" value="cod" onchange="handlePaymentSelection(this)">
                             <div class="radio-dot"></div>
                             <div class="ship-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
                             <div class="ship-info">
@@ -175,50 +171,50 @@
                 <div class="totals-panel">
                     <p class="panel-title">Cenové zhrnutie</p>
 
-                     
-
                     <div class="totals-row">
                         <span class="totals-label">Produkty</span>
-                        <span class="totals-value">€2 159.96</span>
+                        <span class="totals-value" id="subtotalVal">€0.00</span>
                     </div>
                     <div class="totals-row">
                         <span class="totals-label">Doprava</span>
                         <span class="totals-value" id="shippingVal">€3.99</span>
                     </div>
 
-                    <hr class="totals-divider"> 
+                    <hr class="totals-divider">
 
                     <div class="totals-final-row">
                         <span class="totals-final-label">Celkom</span>
-                        <span class="totals-final-value" id="totalVal">€2 163.95</span>
+                        <span class="totals-final-value" id="totalVal">€3.99</span>
                     </div>
 
-                    <button class="btn-order" onclick="submitOrder()">
+                    <button type="submit" class="btn-order">
                         Dokončiť objednávku
                     </button>
-                    <a href="cart.html" class="btn-back-summary">
+                    <a href="/cart" class="btn-back-summary">
                         <i class="fa-solid fa-arrow-left"></i> Späť do košíka
                     </a>
                 </div>
             </div>
         </div>
+        </form>
     </div>
 
     <script>
-        const SUBTOTAL = 2159.96;
+        const SUBTOTAL = {{ $subtotal ?? 0 }};
         const FREE_THRESHOLD = 50;
 
         const shipOptions = document.querySelectorAll('#shippingOptions .ship-option');
         const payOptions = document.querySelectorAll('#paymentOptions .ship-option');
         const shippingVal = document.getElementById('shippingVal');
         const totalVal    = document.getElementById('totalVal');
-        const nudgeBar    = document.getElementById('nudgeBar');
+        const subtotalVal = document.getElementById('subtotalVal');
 
         function fmt(n) {
             return '€' + n.toLocaleString('sk-SK', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
 
-        // --- Shipping Logic ---
+        subtotalVal.textContent = fmt(SUBTOTAL);
+
         function updatePrice(price) {
             if (price === 0) {
                 shippingVal.textContent = 'Zadarmo';

@@ -12,7 +12,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200..1000&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">   
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <title>Produkt</title>
 
 </head>
@@ -37,17 +37,16 @@
             <div class="collapse navbar-collapse" id="mainNavCollapse">
 
                 <!-- Search bar - centred -->
-                <div class="mx-auto my-2 my-lg-0" style="width:100%;max-width:500px;">
-                    <input type="text" placeholder="Hľadať..." class="searchbar" />
-                </div>
+                <form method="GET" action="/product_list" class="mx-auto my-2 my-lg-0 d-flex" style="width:100%;max-width:500px;">
+                    <input type="text" name="search" placeholder="Hľadať..." class="searchbar" />
+                    <button type="submit" class="nav-icon-btn" aria-label="Hľadať">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
 
                 <!-- Icons -->
                 <ul class="navbar-nav align-items-center gap-1 ms-lg-3">
                     <li class="nav-item">
-                        <button class="nav-icon-btn" aria-label="Hľadať">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </button>
-                    </li>
                     <li class="nav-item">
                         <a href="/cart" class="nav-icon-btn" style="text-decoration:none;">
                             <i class="fa-solid fa-cart-arrow-down"></i>
@@ -86,15 +85,27 @@
     <!-- ── MAIN LAYOUT ──────────────────────────────────── -->
     <div class="d-flex flex-lg-row flex-column" style="flex:1;">
 
+        @php
+            $icons = [
+                'Notebooky'     => 'fa-laptop',
+                'Počítače'      => 'fa-desktop',
+                'Smartfóny'     => 'fa-mobile',
+                'Príslušenstvo' => 'fa-computer-mouse',
+                'Spotrebiče'    => 'fa-blender',
+            ];
+        @endphp
+
         <!-- Desktop Sidebar -->
         <aside class="sidebar d-none d-lg-block" style="width:200px; flex-shrink:0;">
             <ul class="categories">
-                <li><a href="#"><i class="fa-solid fa-star"></i> Novinky</a></li>
-                <li><a href="#"><i class="fa-solid fa-laptop"></i> Notebooky</a></li>
-                <li><a href="#"><i class="fa-solid fa-desktop"></i> Počítače</a></li>
-                <li><a href="#"><i class="fa-solid fa-mobile"></i> Smartfóny</a></li>
-                <li><a href="#"><i class="fa-solid fa-computer-mouse"></i> Príslušenstvá</a></li>
-                <li><a href="#"><i class="fa-solid fa-blender"></i> Spotrebiče</a></li>
+                @foreach($categories as $category)
+                    @php $icon = $icons[$category->name] ?? 'fa-tag'; @endphp
+                    <li>
+                        <a href="/product_list?category_id={{ $category->id }}">
+                            <i class="fa-solid {{ $icon }}"></i> {{ $category->name }}
+                        </a>
+                    </li>
+                @endforeach
             </ul>
         </aside>
 
@@ -106,48 +117,35 @@
             </div>
             <div class="offcanvas-body">
                 <ul class="categories">
-                    <li><a href="#"><i class="fa-solid fa-star"></i> Novinky</a></li>
-                    <li><a href="#"><i class="fa-solid fa-laptop"></i> Notebooky</a></li>
-                    <li><a href="#"><i class="fa-solid fa-desktop"></i> Počítače</a></li>
-                    <li><a href="#"><i class="fa-solid fa-mobile"></i> Smartfóny</a></li>
-                    <li><a href="#"><i class="fa-solid fa-computer-mouse"></i> Príslušenstvá</a></li>
-                    <li><a href="#"><i class="fa-solid fa-blender"></i> Spotrebiče</a></li>
+                    @foreach($categories as $category)
+                        @php $icon = $icons[$category->name] ?? 'fa-tag'; @endphp
+                        <li>
+                            <a href="/product_list?category_id={{ $category->id }}">
+                                <i class="fa-solid {{ $icon }}"></i> {{ $category->name }}
+                            </a>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
         </div>
 
-
     <div class="content-area flex-grow-1">
         <div class="product-detail">
             <div class="product-gallery">
-<<<<<<< HEAD
-                <button class="gallery-btn prev-btn" id="prev-btn">&#8249;</button>
-                <img id="main-image" src="{{ $product->images->first()->url ?? 'https://placehold.co/400x400' }}" alt="product" class="gallery-img"/>
-                <button class="gallery-btn next-btn" id="next-btn">&#8250;</button>
+                <button type="button" class="gallery-btn prev-btn" id="prev-btn">&#8249;</button>
+                <img id="main-image"
+                     src="{{ $product->images->first()?->url ?? asset('assets/placeholder.jpg') }}"
+                     alt="{{ $product->name }}" class="gallery-img"/>
+                <button type="button" class="gallery-btn next-btn" id="next-btn">&#8250;</button>
             </div>
 
             <div class="product-thumbnails">
                 @foreach($product->images as $index => $image)
-                    <img src="{{ $image->url }}" alt="thumbnail" class="thumbnail {{ $index === 0 ? 'active' : '' }}" onclick="changeImage('{{ $image->url }}')">
+                    <img src="{{ $image->url }}" alt="thumbnail"
+                         class="thumbnail {{ $index === 0 ? 'active' : '' }}"
+                         onclick="changeImage('{{ $image->url }}', {{ $index }})">
                 @endforeach
             </div>
-
-            <div class="product-info">
-                <p class="product-info-label">{{ $product->name }}</p>
-                <p class="product-info-description">{{ $product->description }}</p>
-                <p class="product-price">€{{ number_format($product->price, 2) }}</p>
-=======
-                <button type="button" class="gallery-btn prev-btn">&#8249;</button>
-                <img id="galleryImg"
-                     src="{{ $product->images->first()?->url ?? asset('assets/placeholder.jpg') }}"
-                     alt="{{ $product->name }}" class="gallery-img"/>
-                <button type="button" class="gallery-btn next-btn">&#8250;</button>
-            </div>
-
-            <script>
-                const productImages = @json($product->images->pluck('url'));
-            </script>
->>>>>>> efa068c0ce0df8696bb8b69393a6fc818b3d515c
 
             <div class="product-info">
                 <p class="product-info-label">{{ strtoupper($product->brand) }}</p>
@@ -169,33 +167,28 @@
                 </form>
 
                 <script>
-<<<<<<< HEAD
                     let currentImageIndex = 0;
                     const images = @json($product->images->pluck('url')->toArray());
 
-                    function changeImage(url) {
+                    function changeImage(url, index) {
                         document.getElementById('main-image').src = url;
-                        currentImageIndex = images.indexOf(url);
-                        // Update active thumbnail
-                        document.querySelectorAll('.thumbnail').forEach((thumb, index) => {
-                            thumb.classList.toggle('active', index === currentImageIndex);
+                        currentImageIndex = index;
+                        document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
+                            thumb.classList.toggle('active', i === currentImageIndex);
                         });
                     }
 
-                    document.getElementById('prev-btn').addEventListener('click', function() {
+                    document.getElementById('prev-btn').addEventListener('click', () => {
                         currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-                        changeImage(images[currentImageIndex]);
+                        changeImage(images[currentImageIndex], currentImageIndex);
                     });
 
-                    document.getElementById('next-btn').addEventListener('click', function() {
+                    document.getElementById('next-btn').addEventListener('click', () => {
                         currentImageIndex = (currentImageIndex + 1) % images.length;
-                        changeImage(images[currentImageIndex]);
+                        changeImage(images[currentImageIndex], currentImageIndex);
                     });
 
-                    function changeQty(qty) {
-=======
                     function changeQty(delta) {
->>>>>>> efa068c0ce0df8696bb8b69393a6fc818b3d515c
                         const input = document.getElementById('qty');
                         let current = parseInt(input.value) || 1;
                         current += delta;
@@ -289,21 +282,5 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        let imgIndex = 0;
-        const galleryImg = document.getElementById('galleryImg');
-
-        document.querySelector('.prev-btn').addEventListener('click', () => {
-            if (productImages.length === 0) return;
-            imgIndex = (imgIndex - 1 + productImages.length) % productImages.length;
-            galleryImg.src = productImages[imgIndex];
-        });
-
-        document.querySelector('.next-btn').addEventListener('click', () => {
-            if (productImages.length === 0) return;
-            imgIndex = (imgIndex + 1) % productImages.length;
-            galleryImg.src = productImages[imgIndex];
-        });
-    </script>
 </body>
 </html>
