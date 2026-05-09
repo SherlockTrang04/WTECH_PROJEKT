@@ -48,10 +48,8 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $product->update($request->only(['name', 'description', 'price', 'category_id', 'brand', 'color', 'stock']));
 
-
         $product->images()->delete();
 
-        // Add new images
         foreach ($request->images as $index => $url) {
             ProductImage::create([
                 'product_id' => $product->id,
@@ -74,8 +72,8 @@ class ProductController extends Controller
         $query = Product::where('is_active', true)->with('images');
 
         //filtrovanie podla kategorii
-        if ($request->filled('category_id')) {
-            $query->where('category_id', $request->category_id);
+        if ($request->has('category_id') && $request->category_id !== '') {
+            $query->where('category_id', (int)$request->category_id);
         }
 
         //filtrovanie podla ceny
@@ -111,16 +109,27 @@ class ProductController extends Controller
             default => $query->orderBy('created_at', 'desc'),
         };
 
-        $products = $query->paginate(9)->withQueryString();
+        $products = $query->paginate(6)->withQueryString();
         $categories = \App\Models\Category::all();
 
-        return view('product_list', compact('products', 'categories'));
+        $brandQuery = Product::where('is_active', true);
+        if ($request->has('category_id') && $request->category_id !== '') {
+            $brandQuery->where('category_id', (int)$request->category_id);
+        }
+        $brands = $brandQuery->whereNotNull('brand')
+            ->selectRaw('brand, count(*) as count')
+            ->groupBy('brand')
+            ->orderBy('brand')
+            ->get();
+
+        return view('product_list', compact('products', 'categories', 'brands'));
     }
 
     public function show(Product $product) {
         $product->load('images', 'category');
         $similar = Product::where('category_id', $product->category_id)->where('id', '!=', $product->id)->limit(3)->get();
+        $categories = \App\Models\Category::all();
 
-        return view('product', compact('product', 'similar'));
+        return view('product', compact('product', 'similar', 'categories'));
     }
 }

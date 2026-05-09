@@ -4,13 +4,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 
 Route::get('/', function () {
-    return view('index');
+    $categories = \App\Models\Category::all();
+    $featured   = \App\Models\Product::where('is_active', true)->with('images')->inRandomOrder()->limit(6)->get();
+    return view('index', compact('categories', 'featured'));
 });
 
-Route::resource('products', ProductController::class);
-Route::get('/product/{id}', [ProductController::class, 'show']);
 Route::get('/product_list', [ProductController::class, 'index']);
 Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
 
@@ -37,15 +38,19 @@ Route::middleware('auth')->group(function () {
  
 
 Route::get('/shipping', function () {
-    return view('shipping');
+    if (\Illuminate\Support\Facades\Auth::check()) {
+        $cart = \App\Models\Cart::with('items.product')->where('user_id', \Illuminate\Support\Facades\Auth::id())->first();
+    } else {
+        $cart = \App\Models\Cart::with('items.product')->where('session_id', session()->getId())->first();
+    }
+    $subtotal = $cart ? $cart->items->sum(fn($i) => $i->product->price * $i->quantity) : 0;
+    return view('shipping', compact('subtotal'));
 });
+Route::post('/order', [OrderController::class, 'store'])->name('order.store');
+Route::get('/order-confirmation/{id}', [OrderController::class, 'confirmation'])->name('order.confirmation');
 
 Route::get('/orderstatus', function () {
     return view('orderstatus');
-});
-
-Route::get('/order-confirmation', function () {
-    return view('index');
 });
 
 Route::get('/cart', [CartController::class, 'show']);

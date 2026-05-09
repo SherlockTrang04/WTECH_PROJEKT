@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -55,7 +56,26 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
         if (Auth::attempt($credentials)) {
+            $sessionId = $request->session()->getId();
             $request->session()->regenerate();
+
+            $guestCart = Cart::with('items')->where('session_id', $sessionId)->first();
+            if ($guestCart && $guestCart->items->isNotEmpty()) {
+                $userCart = Cart::firstOrCreate(['user_id' => Auth::id()]);
+                foreach ($guestCart->items as $guestItem) {
+                    $existing = $userCart->items()->where('product_id', $guestItem->product_id)->first();
+                    if ($existing) {
+                        $existing->increment('quantity', $guestItem->quantity);
+                    } else {
+                        $userCart->items()->create([
+                            'product_id' => $guestItem->product_id,
+                            'quantity'   => $guestItem->quantity,
+                        ]);
+                    }
+                }
+                $guestCart->delete();
+            }
+
             return redirect('/');
         }
         return back()->withErrors([

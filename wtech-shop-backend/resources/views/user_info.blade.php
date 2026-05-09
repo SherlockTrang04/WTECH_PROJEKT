@@ -23,17 +23,15 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="mainNavCollapse">
-                <div class="mx-auto my-2 my-lg-0" style="width:100%;max-width:500px;">
-                    <input type="text" placeholder="Hľadať..." class="searchbar" />
-                </div>
+                <form method="GET" action="/product_list" class="mx-auto my-2 my-lg-0 d-flex" style="width:100%;max-width:500px;">
+                    <input type="text" name="search" placeholder="Hľadať..." class="searchbar" />
+                    <button type="submit" class="nav-icon-btn" aria-label="Hľadať">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
                 <ul class="navbar-nav align-items-center gap-1 ms-lg-3">
                     <li class="nav-item">
-                        <button class="nav-icon-btn" aria-label="Hľadať">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <a href="cart.html" class="nav-icon-btn" style="text-decoration:none;">
+                        <a href="/cart" class="nav-icon-btn" style="text-decoration:none;">
                             <i class="fa-solid fa-cart-arrow-down"></i>
                         </a>
                     </li>

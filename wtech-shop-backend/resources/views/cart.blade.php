@@ -31,17 +31,16 @@
             <div class="collapse navbar-collapse" id="mainNavCollapse">
 
                 <!-- Search bar - centred -->
-                <div class="mx-auto my-2 my-lg-0" style="width:100%;max-width:500px;">
-                    <input type="text" placeholder="Hľadať..." class="searchbar" />
-                </div>
+                <form method="GET" action="/product_list" class="mx-auto my-2 my-lg-0 d-flex" style="width:100%;max-width:500px;">
+                    <input type="text" name="search" placeholder="Hľadať..." class="searchbar" />
+                    <button type="submit" class="nav-icon-btn" aria-label="Hľadať">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
 
                 <!-- Icons -->
                 <ul class="navbar-nav align-items-center gap-1 ms-lg-3">
                     <li class="nav-item">
-                        <button class="nav-icon-btn" aria-label="Hľadať">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </button>
-                    </li>
                     <li class="nav-item">
                         <a href="/cart" class="nav-icon-btn" style="text-decoration:none;">
                             <i class="fa-solid fa-cart-arrow-down"></i>
@@ -81,11 +80,23 @@
     <!-- ── MAIN LAYOUT ──────────────────────────────────── -->
     <div class="d-flex flex-lg-row flex-column" style="flex:1;">
 
+        @php
+            $icons = [
+                'Notebooky'     => 'fa-laptop',
+                'Počítače'      => 'fa-desktop',
+                'Smartfóny'     => 'fa-mobile',
+                'Príslušenstvo' => 'fa-computer-mouse',
+                'Spotrebiče'    => 'fa-blender',
+            ];
+        @endphp
+
         <!-- Desktop Sidebar -->
         <aside class="desktop-sidebar sidebar d-none d-lg-block" style="width:200px; flex-shrink:0;">
             <ul class="categories">
-                <li><a href="/product_list"><i class="fa-solid fa-laptop"></i> Notebooky</a></li>
-                <li><a href="/product_list"><i class="fa-solid fa-mobile"></i> Smartfóny</a></li>
+                @foreach($categories as $category)
+                    @php $icon = $icons[$category->name] ?? 'fa-tag'; @endphp
+                    <li><a href="/product_list?category_id={{ $category->id }}"><i class="fa-solid {{ $icon }}"></i> {{ $category->name }}</a></li>
+                @endforeach
             </ul>
         </aside>
 
@@ -97,8 +108,10 @@
             </div>
             <div class="offcanvas-body">
                 <ul class="categories">
-                    <li><a href="/product_list"><i class="fa-solid fa-laptop"></i> Notebooky</a></li>
-                    <li><a href="/product_list"><i class="fa-solid fa-mobile"></i> Smartfóny</a></li>
+                    @foreach($categories as $category)
+                        @php $icon = $icons[$category->name] ?? 'fa-tag'; @endphp
+                        <li><a href="/product_list?category_id={{ $category->id }}"><i class="fa-solid {{ $icon }}"></i> {{ $category->name }}</a></li>
+                    @endforeach
                 </ul>
             </div>
         </div>

@@ -35,17 +35,16 @@
             <div class="collapse navbar-collapse" id="mainNavCollapse">
 
                 <!-- Search bar - centred -->
-                <div class="mx-auto my-2 my-lg-0" style="width:100%;max-width:500px;">
-                    <input type="text" placeholder="Hľadať..." class="searchbar" />
-                </div>
+                <form method="GET" action="/product_list" class="mx-auto my-2 my-lg-0 d-flex" style="width:100%;max-width:500px;">
+                    <input type="text" name="search" placeholder="Hľadať..." class="searchbar" />
+                    <button type="submit" class="nav-icon-btn" aria-label="Hľadať">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
 
                 <!-- Icons -->
                 <ul class="navbar-nav align-items-center gap-1 ms-lg-3">
                     <li class="nav-item">
-                        <button class="nav-icon-btn" aria-label="Hľadať">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </button>
-                    </li>
                     <li class="nav-item">
                         <a href="./cart" class="nav-icon-btn" style="text-decoration:none;">
                             <i class="fa-solid fa-cart-arrow-down"></i>
@@ -84,15 +83,27 @@
     <!-- ── MAIN LAYOUT ──────────────────────────────────── -->
     <div class="d-flex flex-lg-row flex-column" style="flex:1;">
 
+        @php
+            $icons = [
+                'Notebooky'     => 'fa-laptop',
+                'Počítače'      => 'fa-desktop',
+                'Smartfóny'     => 'fa-mobile',
+                'Príslušenstvo' => 'fa-computer-mouse',
+                'Spotrebiče'    => 'fa-blender',
+            ];
+        @endphp
+
         <!-- Desktop Sidebar -->
         <aside class="desktop-sidebar sidebar d-none d-lg-block" style="width:200px; flex-shrink:0;">
             <ul class="categories">
-                <li><a href="./product_list"><i class="fa-solid fa-star"></i> Novinky</a></li>
-                <li><a href="./product_list"><i class="fa-solid fa-laptop"></i> Notebooky</a></li>
-                <li><a href="./product_list"><i class="fa-solid fa-desktop"></i> Počítače</a></li>
-                <li><a href="./product_list"><i class="fa-solid fa-mobile"></i> Smartfóny</a></li>
-                <li><a href="./product_list"><i class="fa-solid fa-computer-mouse"></i> Príslušenstvá</a></li>
-                <li><a href="./product_list"><i class="fa-solid fa-blender"></i> Spotrebiče</a></li>
+                @foreach($categories as $category)
+                    @php $icon = $icons[$category->name] ?? 'fa-tag'; @endphp
+                    <li>
+                        <a href="/product_list?category_id={{ $category->id }}">
+                            <i class="fa-solid {{ $icon }}"></i> {{ $category->name }}
+                        </a>
+                    </li>
+                @endforeach
             </ul>
         </aside>
 
@@ -104,12 +115,14 @@
             </div>
             <div class="offcanvas-body">
                 <ul class="categories">
-                    <li><a href="./product_list"><i class="fa-solid fa-star"></i> Novinky</a></li>
-                    <li><a href="./product_list"><i class="fa-solid fa-laptop"></i> Notebooky</a></li>
-                    <li><a href="./product_list"><i class="fa-solid fa-desktop"></i> Počítače</a></li>
-                    <li><a href="./product_list"><i class="fa-solid fa-mobile"></i> Smartfóny</a></li>
-                    <li><a href="./product_list"><i class="fa-solid fa-computer-mouse"></i> Príslušenstvá</a></li>
-                    <li><a href="./product_list"><i class="fa-solid fa-blender"></i> Spotrebiče</a></li>
+                    @foreach($categories as $category)
+                        @php $icon = $icons[$category->name] ?? 'fa-tag'; @endphp
+                        <li>
+                            <a href="/product_list?category_id={{ $category->id }}">
+                                <i class="fa-solid {{ $icon }}"></i> {{ $category->name }}
+                            </a>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
         </div>
@@ -128,74 +141,24 @@
                 <img src="./assets/banner.png" />
             </div>
 
-            <!-- Products: row 1 -->
+            <!-- Products -->
             <p class="section-heading">Odporúčané produkty</p>
-            <div class="row g-4 mb-4">
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="product-card">
-                        <img src="./assets/airpods.jpg" alt="Produkt 1" />
-                        <div class="card-body">
-                            <h3>Produkt 1</h3>
-                            <p>Popis produktu 1</p>
-                            <span class="price">€199.99</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="product-card">
-                        <img src="./assets/notebook.jpg" alt="Produkt 2" />
-                        <div class="card-body">
-                            <h3>Produkt 2</h3>
-                            <p>Popis produktu 2</p>
-                            <span class="price">€199.99</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="product-card">
-                        <img src="./assets/cable.jpg" alt="Produkt 3" />
-                        <div class="card-body">
-                            <h3>Produkt 3</h3>
-                            <p>Popis produktu 3</p>
-                            <span class="price">€199.99</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Products: row 2 -->
-            <p class="section-heading">Novinky</p>
             <div class="row g-4 mb-5">
+                @foreach($featured as $product)
                 <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="product-card">
-                        <img src="./assets/charger.jpg" alt="Produkt 4" />
-                        <div class="card-body">
-                            <h3>Produkt 4</h3>
-                            <p>Popis produktu 4</p>
-                            <span class="price">€149.99</span>
+                    <a href="{{ route('product.show', $product) }}" style="text-decoration:none;">
+                        <div class="product-card">
+                            <img src="{{ $product->images->first()?->url ?? asset('assets/notebook.jpg') }}"
+                                 alt="{{ $product->name }}" />
+                            <div class="card-body">
+                                <h3>{{ $product->name }}</h3>
+                                <p>{{ $product->brand }}</p>
+                                <span class="price">€{{ number_format($product->price, 2) }}</span>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="product-card">
-                        <img src="./assets/fridge.jpg" alt="Produkt 5" />
-                        <div class="card-body">
-                            <h3>Produkt 5</h3>
-                            <p>Popis produktu 5</p>
-                            <span class="price">€249.99</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="product-card">
-                        <img src="./assets/iphone.jpg" alt="Produkt 6" />
-                        <div class="card-body">
-                            <h3>Produkt 6</h3>
-                            <p>Popis produktu 6</p>
-                            <span class="price">€89.99</span>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
 
         </main>
