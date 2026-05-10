@@ -24,11 +24,11 @@ class ProductController extends Controller
             });
         }
 
-        if ($request->filled('price_min')) {
+        if ($request->filled('price_min') && (float) $request->price_min > 0) {
             $query->where('price', '>=', $request->price_min);
         }
 
-        if ($request->filled('price_max')) {
+        if ($request->filled('price_max') && (float) $request->price_max < 2000) {
             $query->where('price', '<=', $request->price_max);
         }
 
@@ -46,7 +46,7 @@ class ProductController extends Controller
             default      => $query->latest(),
         };
 
-        $products   = $query->paginate(12)->withQueryString();
+        $products   = $query->paginate(9)->withQueryString();
         $categories = Category::all();
         $brands     = Product::where('is_active', true)
                              ->whereNotNull('brand')
