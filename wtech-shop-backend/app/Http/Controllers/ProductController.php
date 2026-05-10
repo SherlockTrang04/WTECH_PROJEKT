@@ -4,132 +4,73 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
-use App\Models\ProductImage;
 use App\Models\Category;
-
 
 class ProductController extends Controller
 {
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|numeric|min:0',
-            'category_id' => 'required|exists:categories,id',
-            'images' => 'required|array|min:3',
-            'images.*' => 'required|url',
-        ]);
-
-        $product = Product::create($request->only(['name', 'description', 'price', 'category_id', 'brand', 'color', 'stock']));
-
-        foreach ($request->images as $index => $url) {
-            ProductImage::create([
-                'product_id' => $product->id,
-                'url' => $url,
-                'sort_order' => $index,
-            ]);
-        }
-
-        return response()->json(['success' => true, 'product' => $product]);
-    }
-
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|numeric|min:0',
-            'category_id' => 'required|exists:categories,id',
-            'images' => 'required|array|min:3',
-            'images.*' => 'required|url',
-        ]);
-
-        $product = Product::findOrFail($id);
-        $product->update($request->only(['name', 'description', 'price', 'category_id', 'brand', 'color', 'stock']));
-
-        $product->images()->delete();
-
-        foreach ($request->images as $index => $url) {
-            ProductImage::create([
-                'product_id' => $product->id,
-                'url' => $url,
-                'sort_order' => $index,
-            ]);
-        }
-
-        return response()->json(['success' => true, 'product' => $product]);
-    }
-
-    public function destroy($id)
-    {
-        $product = Product::findOrFail($id);
-        $product->delete();
-        return response()->json(['success' => true]);
-    }
     public function index(Request $request)
     {
-        $query = Product::where('is_active', true)->with('images');
+        $query = Product::with('images')->where('is_active', true);
 
-        //filtrovanie podla kategorii
-        if ($request->has('category_id') && $request->category_id !== '') {
-            $query->where('category_id', (int)$request->category_id);
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->category_id);
         }
 
-        //filtrovanie podla ceny
+        if ($request->filled('search')) {
+            $term = $request->search;
+            $query->where(function ($q) use ($term) {
+                $q->where('name', 'like', "%{$term}%")
+                  ->orWhere('description', 'like', "%{$term}%");
+            });
+        }
+
         if ($request->filled('price_min')) {
             $query->where('price', '>=', $request->price_min);
         }
+
         if ($request->filled('price_max')) {
             $query->where('price', '<=', $request->price_max);
         }
 
-        //filtrovanie podla znacky
         if ($request->filled('brand')) {
-            $brands = explode(',', $request->brand);
-            $query->whereIn('brand', $brands);
+            $query->whereIn('brand', explode(',', $request->brand));
         }
 
-        //filtrovanie podla star
-        if ($request->filled('stars')) {
-            $query->where('stars', '>=', (int)$request->stars);
+        if ($request->filled('stars') && $request->stars > 0) {
+            $query->where('stars', '>=', $request->stars);
         }
 
-        //search
-        if ($request->filled('search')) {
-            $search = $request->search;
-            $query->whereRaw("search_vector @@ plainto_tsquery('english', ?)", [$search]);
-        }
-
-        $sort = $request->get('sort', 'newest');
-        match ($sort) {
-            'price_asc' => $query->orderBy('price', 'asc'),
+        match ($request->sort) {
+            'price_asc'  => $query->orderBy('price', 'asc'),
             'price_desc' => $query->orderBy('price', 'desc'),
-            'stars_desc' => $query->orderBy('stars', 'desc'),
-            default => $query->orderBy('created_at', 'desc'),
+            default      => $query->latest(),
         };
 
-        $products = $query->paginate(6)->withQueryString();
-        $categories = \App\Models\Category::all();
-
-        $brandQuery = Product::where('is_active', true);
-        if ($request->has('category_id') && $request->category_id !== '') {
-            $brandQuery->where('category_id', (int)$request->category_id);
-        }
-        $brands = $brandQuery->whereNotNull('brand')
-            ->selectRaw('brand, count(*) as count')
-            ->groupBy('brand')
-            ->orderBy('brand')
-            ->get();
+        $products   = $query->paginate(12)->withQueryString();
+        $categories = Category::all();
+        $brands     = Product::where('is_active', true)
+                             ->whereNotNull('brand')
+                             ->where('brand', '!=', '')
+                             ->selectRaw('brand, count(*) as count')
+                             ->groupBy('brand')
+                             ->orderBy('brand')
+                             ->get();
 
         return view('product_list', compact('products', 'categories', 'brands'));
     }
 
-    public function show(Product $product) {
-        $product->load('images', 'category');
-        $similar = Product::where('category_id', $product->category_id)->where('id', '!=', $product->id)->limit(3)->get();
-        $categories = \App\Models\Category::all();
+    public function show(Product $product)
+    {
+        $product->load('images');
+        $categories = Category::all();
+        $similar    = Product::with('images')
+                             ->where('category_id', $product->category_id)
+                             ->where('id', '!=', $product->id)
+                             ->where('is_active', true)
+                             ->inRandomOrder()
+                             ->limit(4)
+                             ->get();
 
-        return view('product', compact('product', 'similar', 'categories'));
+        return view('product', compact('product', 'categories', 'similar'));
     }
 }

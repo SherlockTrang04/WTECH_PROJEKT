@@ -108,4 +108,36 @@ class AuthController extends Controller
 
         return back()->with('success', 'Informácie boli aktualizované!');
     }
+
+   public function showAdminLogin()
+    {
+    // redirect away if already logged in as admin
+        if (Auth::check() && Auth::user()->is_admin) {
+            return redirect('/admin');
+    }
+    return view('admin-login');
+}
+
+    public function adminLogin(Request $request)
+    {
+        $credentials = $request->validate([
+            'email'    => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            if (Auth::user()->is_admin) {
+                $request->session()->regenerate();
+                return redirect('/admin');
+            }
+
+            // logged in but not admin — kick them out
+            Auth::logout();
+        }
+
+        return back()
+            ->withInput($request->only('email'))
+            ->with('error', 'Neplatné prihlasovacie údaje alebo nedostatočné oprávnenia.');
+    }
+
 }
