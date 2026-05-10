@@ -46,7 +46,7 @@ class ProductController extends Controller
             default      => $query->latest(),
         };
 
-        $products   = $query->paginate(9)->withQueryString();
+        $products   = $query->paginate(6)->withQueryString();
         $categories = Category::all();
         $brands     = Product::where('is_active', true)
                              ->whereNotNull('brand')
