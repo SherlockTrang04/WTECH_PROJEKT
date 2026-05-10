@@ -5,12 +5,14 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\AdminProductController;
+
 
 Route::get('/', function () {
     $categories = \App\Models\Category::all();
     $featured   = \App\Models\Product::where('is_active', true)->with('images')->inRandomOrder()->limit(6)->get();
     return view('index', compact('categories', 'featured'));
-});
+})->name('home');
 
 Route::get('/product_list', [ProductController::class, 'index']);
 Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
@@ -61,12 +63,16 @@ Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add')
 Route::get('/rezervationstatus', function () {
     return view('index');
 });
-Route::get('/admin-login', function () {
-    return view('admin-login');
-});
+Route::get('/admin-login', [AuthController::class, 'showAdminLogin'])->name('admin-login');
+Route::post('/admin-login', [AuthController::class, 'adminLogin'])->name('admin-login.post');
 
-Route::get('/admin', function () {
-    return view('admin');
+Route::middleware(['admin'])->group(function () {
+
+    Route::get('/admin', [AdminProductController::class, 'index']);
+    Route::post('/admin/products', [AdminProductController::class, 'store'])->name('admin.products.store');
+    Route::put('/admin/products/{product}', [AdminProductController::class, 'update'])->name('admin.products.update');
+    Route::delete('/admin/products/{product}', [AdminProductController::class, 'destroy'])->name('admin.products.destroy');
+
 });
 
 

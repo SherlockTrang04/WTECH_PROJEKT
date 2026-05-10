@@ -1,0 +1,62 @@
+/* ── BOOTSTRAP OVERRIDES – Admin Login ───────────────────────────── */
+
+/* form-control */
+.form-control {
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    color: var(--text-light);
+    font-family: "Nunito", sans-serif;
+    padding: 0.85rem 0.9rem;
+}
+
+.form-control:focus {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: var(--text-light);
+    box-shadow: 0 0 0 3px rgba(242, 241, 241, 0.2);
+    color: var(--text-light);
+}
+
+.form-control::placeholder {
+    color: rgba(242, 241, 241, 0.35);
+}
+
+/* form-label */
+.form-label {
+    color: var(--text-light);
+    font-weight: 600;
+    font-size: 0.9rem;
+    font-family: "Nunito", sans-serif;
+}
+
+/* btn-primary → your white pill */
+.btn-primary {
+    background-color: var(--text-light);
+    border-color: var(--text-light);
+    color: var(--bg-dark);
+    font-family: "Nunito", sans-serif;
+    font-weight: 700;
+    padding: 0.9rem;
+    border-radius: 7px;
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus {
+    background-color: var(--bg-dark-light);
+    border-color: var(--bg-dark-light);
+    color: var(--text-light);
+    box-shadow: none;
+    transform: translateY(-1px);
+}
+
+/* alert-danger */
+.alert-danger {
+    background-color: rgba(255, 107, 107, 0.12);
+    border: 1px solid rgba(255, 107, 107, 0.35);
+    color: #ff6b6b;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-family: "Nunito", sans-serif;
+}
