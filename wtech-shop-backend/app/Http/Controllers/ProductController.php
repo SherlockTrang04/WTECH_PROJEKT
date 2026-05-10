@@ -37,7 +37,7 @@ class ProductController extends Controller
         }
 
         if ($request->filled('stars') && $request->stars > 0) {
-            $query->where('stars', '>=', $request->stars);
+            $query->where('stars', '>=', (int) $request->stars);
         }
 
         match ($request->sort) {
